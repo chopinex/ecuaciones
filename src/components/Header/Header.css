@@ -1,0 +1,21 @@
+header{
+    background-color: skyblue;
+    display: flex;                  /* establish flex container */
+    flex-direction: row;            /* default value; can be omitted */
+    flex-wrap: nowrap;              /* default value; can be omitted */
+    justify-content: space-between;
+}
+
+.logo{
+    font-size: 24pt;
+    margin: 0 0 10px 20px;
+}
+
+.menu{
+    margin:  0 20px;
+    display: flex;
+}
+
+.menu-head{
+    margin: 20px 10px 0 0;  
+}
