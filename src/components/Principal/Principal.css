@@ -2,6 +2,11 @@ h1{
     text-align: center;
 }
 
+select{
+    margin: 0 auto;
+    font-size: 20pt;
+}
+
 .area-ecuacion{
     margin:  0 auto;
     height:  200px;
@@ -13,6 +18,7 @@ h1{
     padding: 20px;
     background-color: rgb(200, 200, 255);
     width:  40px;
+    height: 40px;
     text-align: center;
     font-size: 24pt;
     font-weight: bold;
@@ -24,4 +30,43 @@ h1{
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+}
+
+.ecuacion{
+        display:  flex;
+        position:  relative;
+        top:  30%;
+        left:  30%;
+}
+
+.lineal{
+    padding: 20px;
+    background-color: rgb(200, 255, 255);
+    border: 1px solid skyblue;
+    width:  40px;
+    height:  40px;
+    text-align: center;
+    font-size: 24pt;
+    font-weight: bold;    
+}
+
+.igual{
+    padding: 20px;
+    border: 1px solid gray;
+    width:  40px;
+    height:  40px;
+    text-align: center;
+    font-size: 24pt;
+    font-weight: bold;    
+}
+
+.constante{
+    padding: 20px;
+    background-color: rgb(255, 200, 200);
+    border: 1px solid salmon;
+    width:  40px;
+    height:  40px;
+    text-align: center;
+    font-size: 24pt;
+    font-weight: bold;    
 }
