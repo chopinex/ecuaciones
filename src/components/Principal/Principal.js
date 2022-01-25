@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { useSpring, animated } from '@react-spring/web'
 import { useDrag } from '@use-gesture/react'
+import {DragDropContext} from 'react-beautiful-dnd'
 import './Principal.css'
 import Column from './Column'
 
@@ -12,7 +13,7 @@ const Principal = () =>{
         tasks: {
             'task-1' : { id: 'task-1', content: 'Take out the garbage'},
             'task-2' : { id: 'task-2', content: 'Watch my favourite show'},
-            'task-3' : { id: 'task-3', content: 'Charge py phone'},
+            'task-3' : { id: 'task-3', content: 'Charge my phone'},
             'task-4' : { id: 'task-4', content: 'Cook dinner'},
         },
         columns:{
@@ -33,6 +34,10 @@ const Principal = () =>{
     }
 
     const [data,setData] = useState(initialData)
+
+    const dragEnd = (result) =>{
+        
+    }
 
     if(nivel===1){
         return(
@@ -55,7 +60,9 @@ const Principal = () =>{
                             const column = data.columns[columnId];
                             const tasks =column.taskIds.map(taskId => data.tasks[taskId])
 
-                            return <Column key={column.id} column={column} tasks={tasks} />;
+                            return (<DragDropContext onDragEnd={dragEnd}>
+                                <Column key={column.id} column={column} tasks={tasks} />
+                                </DragDropContext>);
                         })
                      }
                  </div>
