@@ -2,10 +2,24 @@ import React,{useState} from 'react'
 import { useSpring, animated } from '@react-spring/web'
 import { useDrag } from '@use-gesture/react'
 import './Principal.css'
+import Column from './Column'
 
 const Principal = () =>{
     const [nivel,setNivel] =useState(1)
     const [{x,y},api] = useSpring(()=>({x:0,y:0}))
+
+    const initialData={
+        tasks: {
+            'task-1' : { id: 'task-1', content: 'Take out the garbage'},
+            'task-2' : { id: 'task-2', content: 'Watch my favourite show'},
+            'task-3' : { id: 'task-3', content: 'Charge py phone'},
+            'task-4' : { id: 'task-4', content: 'Cook dinner'},
+        },
+        columns:{
+            'column-1' : { id:'column-1', title: 'to do', taskIds : ['task-1','task-2','task-3','task-4'],}
+        },
+        columnOrder : ['column-1'],
+    };
     
     const bind = useDrag(({ down, offset: [ox, oy] }) => 
         api.start({ x: ox, y: oy, immediate: down })
@@ -17,6 +31,8 @@ const Principal = () =>{
         console.log(parseInt(event.target.value))
         setNivel(parseInt(event.target.value));
     }
+
+    const [data,setData] = useState(initialData)
 
     if(nivel===1){
         return(
@@ -32,7 +48,17 @@ const Principal = () =>{
                  <select onChange={handleChange}>
                     <option value="1">1</option>
                     <option value="2">2</option>
-                 </select> 
+                 </select>
+                 <div className="lista">
+                     {
+                        data.columnOrder.map(columnId => {
+                            const column = data.columns[columnId];
+                            const tasks =column.taskIds.map(taskId => data.tasks[taskId])
+
+                            return <Column key={column.id} column={column} tasks={tasks} />;
+                        })
+                     }
+                 </div>
             </div>
         );    
     }
