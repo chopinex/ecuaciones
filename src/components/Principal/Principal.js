@@ -35,8 +35,40 @@ const Principal = () =>{
 
     const [data,setData] = useState(initialData)
 
-    const dragEnd = (result) =>{
+    const dragStart = () =>{
+        document.getElementById('contexto').style.color = 'red';
+    }
+
+    const dragUpdate = () =>{
         
+    }
+
+    const dragEnd = result =>{
+        document.getElementById('contexto').style.color = 'inherit';
+        const {destination,source,draggableId} = result;
+        if(!destination)
+            return ;
+        if(destination.droppableId === source.droppableId && destination.index === source.index)
+            return;
+        const column = data.columns[source.droppableId];
+        const newTaskIds = Array.from(column.taskIds);
+        newTaskIds.splice(source.index,1);
+        newTaskIds.splice(destination.index,0,draggableId);
+
+        const newColumn ={
+            ...column, taskIds: newTaskIds,
+        };
+
+
+        const newData = {
+            ...data,
+            columns: {
+                ...data.columns,
+                [newColumn.id]: newColumn,
+            },
+        };
+
+        setData(newData);
     }
 
     if(nivel===1){
@@ -54,13 +86,13 @@ const Principal = () =>{
                     <option value="1">1</option>
                     <option value="2">2</option>
                  </select>
-                 <div className="lista">
+                 <div id="contexto" className="lista">
                      {
                         data.columnOrder.map(columnId => {
                             const column = data.columns[columnId];
                             const tasks =column.taskIds.map(taskId => data.tasks[taskId])
 
-                            return (<DragDropContext onDragEnd={dragEnd}>
+                            return (<DragDropContext onDragStart={dragStart} onDragUpdate={dragUpdate} onDragEnd={dragEnd}>
                                 <Column key={column.id} column={column} tasks={tasks} />
                                 </DragDropContext>);
                         })

@@ -5,10 +5,12 @@ import './Task.css'
 const Task = (props) =>{
 	return (
 		<Draggable draggableId={props.task.id} index={props.index}>
-			{(provided) => (<div className="task"
+			{(provided,snapshot) => (<div className="task"
 			 ref={provided.innerRef}
 			{...provided.draggableProps}
-			{...provided.dragHandleProps}>
+			 style={{...provided.draggableProps.style,backgroundColor: snapshot.isDragging ? 'yellow' : 'white'}}
+			{...provided.dragHandleProps}
+			>
 				{props.task.content}
 			</div>)}
 		</Draggable>
