@@ -70,3 +70,7 @@ select{
     font-size: 24pt;
     font-weight: bold;    
 }
+
+.lista{
+    display: flex;
+}

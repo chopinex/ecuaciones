@@ -7,7 +7,7 @@ const Column = (props) =>{
     return (
         <div className="col-container">
             <div className="col-title">{props.column.title}</div>
-            <Droppable droppableId={props.column.id}>
+            <Droppable droppableId={props.column.id} direction = 'horizontal'>
             {(provided,snapshot) => (<div className="task-list" 
                 ref={provided.innerRef}
                  {...provided.droppableProps}

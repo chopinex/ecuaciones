@@ -2,6 +2,9 @@
     margin:  8px;
     border:  1px solid lightgray;
     border-radius: 2px;
+
+    display:  flex;
+    flex-direction: column;
 }
 
 .col-title{
@@ -10,4 +13,5 @@
 
 .task-list{
     padding: 8px;
+    display:  flex;
 }
