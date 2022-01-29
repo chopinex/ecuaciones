@@ -1,33 +1,29 @@
 import React,{useState} from 'react'
-import { useSpring, animated } from '@react-spring/web'
-import { useDrag } from '@use-gesture/react'
 import {DragDropContext} from 'react-beautiful-dnd'
 import './Principal.css'
 import Column from './Column'
 
 const Principal = () =>{
-    const [nivel,setNivel] =useState(1)
-    const [{x,y},api] = useSpring(()=>({x:0,y:0}))
+    const [nivel,setNivel] = useState(1)
+    const [error,setError] = useState('')
+    const [lado,setLado] = useState('column-1')
 
     const initialData={
         tasks: {
             'task-1' : { id: 'task-1', content: '3x'},
-            'task-2' : { id: 'task-2', content: '7'},
-            'task-3' : { id: 'task-3', content: '5x'},
-            'task-4' : { id: 'task-4', content: '1'},
+            'task-2' : { id: 'task-2', content: '-7x'},
+            'task-3' : { id: 'task-3', content: '4'},
+            'task-4' : { id: 'task-4', content: '+1'},
+            'igual' : {id:'igual', content: '='}
         },
         columns:{
-            'column-1' : { id:'column-1', title: 'lineales', taskIds : ['task-1','task-2','task-3','task-4'],},
-            'column-2' : { id:'column-2', title: 'constantes', taskIds : [],},
+            'column-1' : { id:'column-1', title: 'lineales', taskIds : ['task-1','task-2'],},
+            'column-0' : { id:'column-0', title: 'signo', taskIds : ['igual']},
+            'column-2' : { id:'column-2', title: 'constantes', taskIds : ['task-3','task-4'],},
         },
-        columnOrder : ['column-1','column-2'],
+        columnOrder : ['column-1','column-0','column-2'],
     };
     
-    const bind = useDrag(({ down, offset: [ox, oy] }) => 
-        api.start({ x: ox, y: oy, immediate: down })
-        , {
-    bounds: { left: 0, right: 520, top: 0, bottom: 120 }
-    })
 
     const handleChange = (event) =>{
         console.log(parseInt(event.target.value))
@@ -36,12 +32,51 @@ const Principal = () =>{
 
     const [data,setData] = useState(initialData)
 
-    const dragStart = () =>{
-        document.getElementById('contexto').style.color = 'red';
+    const calcularL = (value) =>{
+        var suma=0;
+        var val = parseInt(value);
+        var variable=value.match(/[A-Za-z]+/);
+        if(!variable){
+            setError("no hay variable!");
+            return;
+        }
+        else{
+            if(variable[0]!=='x'){
+                setError("no es la variable correcta");
+                return;
+            }
+            else
+                setError("");
+        }    
+
+        data.columns['column-1'].taskIds.map( tid =>{
+            suma+=parseInt(data.tasks[tid].content.match(/[+,-]*\d+/g));
+        })
+        if(suma!==val)
+            setError("no es el valor correcto");
+        else{
+            setError("bien!!");
+            setLado('column-2');
+        }
     }
 
-    const dragUpdate = () =>{
+    const calcularC = (value) =>{
+        var suma=0;
+        var val = parseInt(value);
         
+        data.columns['column-2'].taskIds.map( tid =>{
+            suma+=parseInt(data.tasks[tid].content.match(/[+,-]*\d+/g));
+        })
+        if(suma!==val)
+            setError("no es el valor correcto");
+        else{
+            setError("bien!!");
+            setLado('');
+        }
+    }
+
+    const dragStart = () =>{
+        document.getElementById('contexto').style.color = 'green';
     }
 
     const dragEnd = result =>{
@@ -107,30 +142,37 @@ const Principal = () =>{
                  <h1>Primer paso: reducción</h1>
                  <div className="area-ecuacion">
                     <div className="ecuacion">
-                        <div className="lineal">4x</div>
-                        <div className="igual">=</div>
-                        <div className="constante">12</div>
+                        <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
+                        <div id="contexto" className="lista">
+                        {
+                            data.columnOrder.map(columnId => {
+                                const column = data.columns[columnId];
+                                const tasks =column.taskIds.map(taskId => data.tasks[taskId])
+
+                                return (
+                                    <Column
+                                     key={column.id}
+                                     column={column}
+                                     tasks={tasks}
+                                     lado={lado}/>
+                                    );
+                            })
+                        }
+                        </div>
+                        </DragDropContext>
                     </div>
+                    <div className="ecuacion">
+                        {<input type="text" className="reducido" disabled={lado!=='column-1'?true:false} onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value)}/>}
+                        <div className="reducido" style={{color: 'blue',}}>=</div>
+                        {<input type="text"
+                         className="reducido" disabled={lado!=='column-2'?true:false} onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value)}/>}
+                    </div>
+                    <div>{error}</div>
                  </div>
                  <select onChange={handleChange}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                  </select>
-                 <DragDropContext onDragStart={dragStart} onDragUpdate={dragUpdate} onDragEnd={dragEnd}>
-                 <div id="contexto" className="lista">
-                     {
-                        data.columnOrder.map(columnId => {
-                            const column = data.columns[columnId];
-                            const tasks =column.taskIds.map(taskId => data.tasks[taskId])
-
-                            return (
-                                <Column key={column.id} column={column} tasks={tasks} />
-                                );
-                        })
-                        
-                     }
-                 </div>
-                 </DragDropContext>
             </div>
         );    
     }
@@ -139,10 +181,20 @@ const Principal = () =>{
             <div>
                 <h1>Segundo paso: transposicion</h1>
                 <div className="area-ecuacion">
-                    <animated.div
-                    className="elemento-ecuacion"
-                    {...bind()} style={{ x, y, touchAction: 'none' }}
-                    >3x</animated.div>
+                    <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
+                        <div className="lista">
+                        {
+                            data.columnOrder.map(columnId => {
+                                const column = data.columns[columnId];
+                                const tasks =column.taskIds.map(taskId => data.tasks[taskId])
+
+                                return (
+                                    <Column key={column.id} column={column} tasks={tasks} />
+                                    );
+                            })
+                        }
+                    </div>
+                    </DragDropContext>
                 </div>
                 <select onChange={handleChange}>
                     <option value="1">1</option>

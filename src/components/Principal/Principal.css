@@ -12,37 +12,39 @@ select{
     height:  200px;
     width:  600px;
     border: 1px solid black;
+
+    display:  flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.elemento-ecuacion{
-    padding: 20px;
-    background-color: rgb(200, 200, 255);
-    width:  40px;
-    height: 40px;
-    text-align: center;
-    font-size: 24pt;
+.reducido{
+    font-size: 20pt;
     font-weight: bold;
+    width: 60px;
+    text-align: center;
+    padding: 8px 0;
+}
 
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+.reducido:enabled{
+    border: 2px dashed black;
+    border-radius: 4px;
+}
+
+.reducido:disabled{
+    border: 0px;
+    color: blue;
 }
 
 .ecuacion{
-        display:  flex;
-        position:  relative;
-        top:  30%;
-        left:  30%;
+    display:  flex;
 }
 
 .lineal{
     padding: 20px;
-    background-color: rgb(200, 255, 255);
-    border: 1px solid skyblue;
+    /*background-color: rgb(200, 255, 255);
+    border: 1px solid skyblue;*/
     width:  40px;
     height:  40px;
     text-align: center;
@@ -52,7 +54,7 @@ select{
 
 .igual{
     padding: 20px;
-    border: 1px solid gray;
+    /*border: 1px solid gray;*/
     width:  40px;
     height:  40px;
     text-align: center;
@@ -62,8 +64,8 @@ select{
 
 .constante{
     padding: 20px;
-    background-color: rgb(255, 200, 200);
-    border: 1px solid salmon;
+    /*background-color: rgb(255, 200, 200);
+    border: 1px solid salmon;*/
     width:  40px;
     height:  40px;
     text-align: center;

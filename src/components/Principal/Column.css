@@ -1,6 +1,6 @@
 .col-container{
-    margin:  8px;
-    border:  1px solid lightgray;
+    margin:  2px;
+    /*border:  1px solid lightgray;*/
     border-radius: 2px;
 
     display:  flex;
@@ -14,4 +14,10 @@
 .task-list{
     padding: 8px;
     display:  flex;
+}
+
+@keyframes animatedNumber{
+    0%{color: red;font-size:20pt;} 
+    50%{color: orange;font-size:22pt;}
+   100%{color: red;font-size:20pt;}
 }
