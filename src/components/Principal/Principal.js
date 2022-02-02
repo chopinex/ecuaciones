@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import {DragDropContext} from 'react-beautiful-dnd'
 import './Principal.css'
 import Column from './Column'
+import flecha from './arrow.png'
 
 const Principal = () =>{
     const [error,setError] = useState('')
@@ -76,7 +77,6 @@ const Principal = () =>{
         if(value===data.answer){
             setError("bien!");
             setLado('');
-            //setPaso('');
         }
         else{
             setError("no es correcto");
@@ -145,12 +145,31 @@ const Principal = () =>{
     }
 
     const normalNumber = {color: "darkgreen",fontSize:"20pt"};
+    const animatedNumber = {animation: "animatedNumber2 1s infinite"};
 
-    const animatedNumber = { animation: "animatedNumber2 1s infinite"};
+    const tipIzquierda = {left: "30%",top: "170px"};
+    const tipDerecha = {left: "62%",top: "160px"};
+    const tipAbajo = {left: "30%",top: "250px"};
+
+    const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:"140px",left:"39%",animation: "vaiven 1s infinite"};
+    const vaivenDer ={position: "relative",width:"30px",zIndex:"1",top:"130px",left:"58%",animation: "vaiven2 1s infinite"};
+    const vaivenAbj ={position: "relative",width:"30px",zIndex:"1",top:"220px",left:"40%",animation: "vaiven 1s infinite"};
+
 
     return(
         <div>
-             <h1>Primer paso: reducción</h1>
+            {lado && <div className="tip" style={paso==='reducir'?(lado==='column-1'?tipIzquierda:tipDerecha):tipAbajo}>
+                {
+                    {
+                        'reducir' : 'REDUCIR',
+                        'transponer' : 'TRANSPONER',
+                        'despejar' : 'DESPEJAR',
+                    }[paso]
+                }
+            </div>}
+            {lado && <img src={flecha}
+             alt="flecha"
+             style={paso==='reducir'?(lado==='column-1'?vaivenIzq:vaivenDer):vaivenAbj} />}
              <div className="area-ecuacion">
                 <div className="ecuacion">
                     <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
@@ -164,7 +183,8 @@ const Principal = () =>{
                                  key={column.id}
                                  column={column}
                                  tasks={tasks}
-                                 lado={lado}/>
+                                 lado={lado}
+                                 paso={paso}/>
                                 );
                         })
                     }
@@ -179,10 +199,10 @@ const Principal = () =>{
                      className="reducido" disabled={lado!=='column-2'?true:false} onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value)}/>}
                 </div>
                 <div className="ecuacion">
-                    {paso=== 'despejar' && <label className="reducido" style={lado==='column-3'?animatedNumber:normalNumber}>x</label>}
-                    {paso==='despejar' && <div className="reducido" style={{color: 'darkGreen',}}>=</div>}
+                    {paso=== 'despejar' && <label className="despejado" style={lado==='column-3'?animatedNumber:normalNumber}>x</label>}
+                    {paso==='despejar' && <div className="despejado">=</div>}
                     {paso==='despejar' && <input type="text"
-                     className="reducido" disabled={lado===''?true:false} onKeyPress={e => e.key === 'Enter' && calcularR(e.target.value)}/>}
+                     className="despejado" disabled={lado===''?true:false} onKeyPress={e => e.key === 'Enter' && calcularR(e.target.value)}/>}
 
                 </div>
                 <div>{error}</div>

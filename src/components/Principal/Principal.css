@@ -1,12 +1,3 @@
-h1{
-    text-align: center;
-}
-
-select{
-    margin: 0 auto;
-    font-size: 20pt;
-}
-
 .area-ecuacion{
     margin:  0 auto;
     height:  300px;
@@ -17,6 +8,15 @@ select{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.tip{
+    position: relative;
+    left: 150px;
+    top: 170px;
+    font-size: 20pt;
+    font-weight: bold;
+    z-index: 1;
 }
 
 .reducido{
@@ -35,6 +35,26 @@ select{
 .reducido:disabled{
     border: 0px;
     color: blue;
+}
+
+.despejado{
+    font-size: 20pt;
+    font-weight: bold;
+    width: 70px;
+    height: 50px;
+    text-align: center;
+    padding: 8px 0;
+    color: darkgreen;
+}
+
+.despejado:enabled{
+    border: 2px dashed black;
+    border-radius: 4px;
+}
+
+.despejado:disabled{
+    border: 0px;
+    color: darkgreen;
 }
 
 .ecuacion{
@@ -81,4 +101,16 @@ select{
     0%{color: darkgreen;font-size:24pt;} 
     50%{color: lightgreen;font-size:32pt;}
    100%{color: darkgreen;font-size:24pt;}
+}
+
+@keyframes vaiven{
+    0%{transform: translate(5px,0);}
+    50%{transform: translate(-5px,0);}
+    100%{transform: translate(5px,0);}
+}
+
+@keyframes vaiven2{
+    0%{transform: translate(-5px,0) scaleX(-1);}
+    50%{transform: translate(5px,0) scaleX(-1);}
+    100%{transform: translate(-5px,0) scaleX(-1);}
 }
