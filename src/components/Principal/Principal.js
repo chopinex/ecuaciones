@@ -4,9 +4,9 @@ import './Principal.css'
 import Column from './Column'
 
 const Principal = () =>{
-    const [nivel,setNivel] = useState(1)
     const [error,setError] = useState('')
     const [lado,setLado] = useState('column-1')
+    const [paso,setPaso] = useState('reducir')
 
     const initialData={
         tasks: {
@@ -22,14 +22,9 @@ const Principal = () =>{
             'column-2' : { id:'column-2', title: 'constantes', taskIds : ['task-3','task-4'],},
         },
         columnOrder : ['column-1','column-0','column-2'],
+        answer : '-5/4',
     };
     
-
-    const handleChange = (event) =>{
-        console.log(parseInt(event.target.value))
-        setNivel(parseInt(event.target.value));
-    }
-
     const [data,setData] = useState(initialData)
 
     const calcularL = (value) =>{
@@ -70,8 +65,21 @@ const Principal = () =>{
         if(suma!==val)
             setError("no es el valor correcto");
         else{
-            setError("bien!!");
+            setError("");
+            setLado('column-3');
+            setPaso('despejar')
+        }
+    }
+
+    const calcularR = (value) =>{
+        console.log(data.answer);
+        if(value===data.answer){
+            setError("bien!");
             setLado('');
+            //setPaso('');
+        }
+        else{
+            setError("no es correcto");
         }
     }
 
@@ -136,72 +144,52 @@ const Principal = () =>{
         setData(newData);
     }
 
-    if(nivel===1){
-        return(
-            <div>
-                 <h1>Primer paso: reducción</h1>
-                 <div className="area-ecuacion">
-                    <div className="ecuacion">
-                        <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
-                        <div id="contexto" className="lista">
-                        {
-                            data.columnOrder.map(columnId => {
-                                const column = data.columns[columnId];
-                                const tasks =column.taskIds.map(taskId => data.tasks[taskId])
+    const normalNumber = {color: "darkgreen",fontSize:"20pt"};
 
-                                return (
-                                    <Column
-                                     key={column.id}
-                                     column={column}
-                                     tasks={tasks}
-                                     lado={lado}/>
-                                    );
-                            })
-                        }
-                        </div>
-                        </DragDropContext>
-                    </div>
-                    <div className="ecuacion">
-                        {<input type="text" className="reducido" disabled={lado!=='column-1'?true:false} onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value)}/>}
-                        <div className="reducido" style={{color: 'blue',}}>=</div>
-                        {<input type="text"
-                         className="reducido" disabled={lado!=='column-2'?true:false} onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value)}/>}
-                    </div>
-                    <div>{error}</div>
-                 </div>
-                 <select onChange={handleChange}>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                 </select>
-            </div>
-        );    
-    }
-    if(nivel===2){
-        return(
-            <div>
-                <h1>Segundo paso: transposicion</h1>
-                <div className="area-ecuacion">
+    const animatedNumber = { animation: "animatedNumber2 1s infinite"};
+
+    return(
+        <div>
+             <h1>Primer paso: reducción</h1>
+             <div className="area-ecuacion">
+                <div className="ecuacion">
                     <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
-                        <div className="lista">
-                        {
-                            data.columnOrder.map(columnId => {
-                                const column = data.columns[columnId];
-                                const tasks =column.taskIds.map(taskId => data.tasks[taskId])
-
+                    <div id="contexto" className="lista">
+                    {
+                        data.columnOrder.map(columnId => {
+                            const column = data.columns[columnId];
+                            const tasks =column.taskIds.map(taskId => data.tasks[taskId])
                                 return (
-                                    <Column key={column.id} column={column} tasks={tasks} />
-                                    );
-                            })
-                        }
+                                <Column
+                                 key={column.id}
+                                 column={column}
+                                 tasks={tasks}
+                                 lado={lado}/>
+                                );
+                        })
+                    }
                     </div>
                     </DragDropContext>
                 </div>
-                <select onChange={handleChange}>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                 </select> 
-            </div>
-        );}
+                <div className="ecuacion">
+                    {<input type="text" 
+                     className="reducido" disabled={lado!=='column-1'?true:false} onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value)}/>}
+                    <div className="reducido" style={{color: 'blue',}}>=</div>
+                    {<input type="text"
+                     className="reducido" disabled={lado!=='column-2'?true:false} onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value)}/>}
+                </div>
+                <div className="ecuacion">
+                    {paso=== 'despejar' && <label className="reducido" style={lado==='column-3'?animatedNumber:normalNumber}>x</label>}
+                    {paso==='despejar' && <div className="reducido" style={{color: 'darkGreen',}}>=</div>}
+                    {paso==='despejar' && <input type="text"
+                     className="reducido" disabled={lado===''?true:false} onKeyPress={e => e.key === 'Enter' && calcularR(e.target.value)}/>}
+
+                </div>
+                <div>{error}</div>
+             </div>
+        </div>
+    );    
 }
+
 
 export default Principal;
