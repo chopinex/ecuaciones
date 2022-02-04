@@ -7,13 +7,13 @@ import flecha from './arrow.png'
 const Principal = () =>{
     const [error,setError] = useState('')
     const [lado,setLado] = useState('column-1')
-    const [paso,setPaso] = useState('reducir')
+    const [paso,setPaso] = useState('transponer')
 
     const initialData={
         tasks: {
             'task-1' : { id: 'task-1', content: '3x'},
-            'task-2' : { id: 'task-2', content: '-7x'},
-            'task-3' : { id: 'task-3', content: '4'},
+            'task-2' : { id: 'task-2', content: '-4'},
+            'task-3' : { id: 'task-3', content: '7x'},
             'task-4' : { id: 'task-4', content: '+1'},
             'igual' : {id:'igual', content: '='}
         },
@@ -147,9 +147,9 @@ const Principal = () =>{
     const normalNumber = {color: "darkgreen",fontSize:"20pt"};
     const animatedNumber = {animation: "animatedNumber2 1s infinite"};
 
-    const tipIzquierda = {left: "30%",top: "170px"};
+    const tipIzquierda = {left: "25%",top: "170px"};
     const tipDerecha = {left: "62%",top: "160px"};
-    const tipAbajo = {left: "30%",top: "250px"};
+    const tipAbajo = {left: "25%",top: "250px"};
 
     const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:"140px",left:"39%",animation: "vaiven 1s infinite"};
     const vaivenDer ={position: "relative",width:"30px",zIndex:"1",top:"130px",left:"58%",animation: "vaiven2 1s infinite"};
@@ -158,7 +158,7 @@ const Principal = () =>{
 
     return(
         <div>
-            {lado && <div className="tip" style={paso==='reducir'?(lado==='column-1'?tipIzquierda:tipDerecha):tipAbajo}>
+            {lado && <div className="tip" style={(paso==='reducir' || paso==='transponer')?(lado==='column-1'?tipIzquierda:tipDerecha):tipAbajo}>
                 {
                     {
                         'reducir' : 'REDUCIR',
@@ -169,7 +169,7 @@ const Principal = () =>{
             </div>}
             {lado && <img src={flecha}
              alt="flecha"
-             style={paso==='reducir'?(lado==='column-1'?vaivenIzq:vaivenDer):vaivenAbj} />}
+             style={(paso==='reducir'||paso==='transponer')?(lado==='column-1'?vaivenIzq:vaivenDer):vaivenAbj} />}
              <div className="area-ecuacion">
                 <div className="ecuacion">
                     <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>

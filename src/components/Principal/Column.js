@@ -9,7 +9,7 @@ const Column = (props) =>{
     console.log(props.paso);
 
     return (
-        <div className="col-container" style={props.lado===props.column.id?animatedNumber:normalNumber}>
+        <div className="col-container" style={(props.lado===props.column.id && props.paso==='reducir')?animatedNumber:normalNumber}>
             {/*<div className="col-title">{props.column.title}</div>*/}
             <Droppable droppableId={props.column.id}
              direction = 'horizontal' 

@@ -12,11 +12,9 @@
 
 .tip{
     position: relative;
-    left: 150px;
-    top: 170px;
     font-size: 20pt;
     font-weight: bold;
-    z-index: 1;
+    z-index: -1;
 }
 
 .reducido{
