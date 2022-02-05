@@ -6,6 +6,7 @@ const Task = (props) =>{
 	return (
 		<Draggable draggableId={props.task.id} index={props.index}>
 			{(provided,snapshot) => (<div className="task"
+			 id={props.task.id}
 			 ref={provided.innerRef}
 			{...provided.draggableProps}
 			 style={{...provided.draggableProps.style,backgroundColor: snapshot.isDragging ? 'yellow' : 'white'}}

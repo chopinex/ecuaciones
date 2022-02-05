@@ -8,6 +8,7 @@ const Principal = () =>{
     const [error,setError] = useState('')
     const [lado,setLado] = useState('column-1')
     const [paso,setPaso] = useState('transponer')
+    const [origen,setOrigen] = useState('')
 
     const initialData={
         tasks: {
@@ -83,9 +84,46 @@ const Principal = () =>{
         }
     }
 
-    const dragStart = () =>{
+    const dragStart = start =>{
         document.getElementById('contexto').style.color = 'green';
+        const {draggableId} = start;
+        setOrigen(data.tasks[draggableId].content);
     }
+
+    const dragUpdate = update =>{
+        const {destination,source,draggableId} = update;
+
+        const start = data.columns[source.droppableId].id;
+        const finish = destination?data.columns[destination.droppableId].id:null;
+
+        const arrastradoX=document.getElementById(draggableId).getBoundingClientRect().x;
+        const igualX=document.getElementById("column-0").getBoundingClientRect().x;
+        const orig=data.tasks[draggableId].content;
+        if(finish && start!==finish && orig === origen){
+            
+            if((finish==='column-2' && arrastradoX>igualX) || (finish==='column-1' && arrastradoX<igualX)){
+                var cambio=parseInt(orig)*(-1);
+                var x="";
+                if (orig.match(/[A-Za-z]+/))
+                    x=orig.match(/[A-Za-z]+/)[0];
+                
+                const newTask = {
+                    ...data.tasks[draggableId],
+                    content: cambio>0?"+"+cambio.toString()+x:cambio.toString()+x,
+                };
+
+                const newData = {
+                    ...data,
+                    tasks: {
+                        ...data.tasks,
+                        [draggableId]: newTask,
+                    },
+                };
+                setData(newData);
+            }
+        }
+        
+    } 
 
     const dragEnd = result =>{
         document.getElementById('contexto').style.color = 'inherit';
@@ -94,6 +132,7 @@ const Principal = () =>{
             return ;
         if(destination.droppableId === source.droppableId && destination.index === source.index)
             return;
+        console.log(destination.index);
         const start = data.columns[source.droppableId];
         const finish = data.columns[destination.droppableId];
 
@@ -142,7 +181,9 @@ const Principal = () =>{
             };       
         
         setData(newData);
+        setOrigen('');
     }
+
 
     const normalNumber = {color: "darkgreen",fontSize:"20pt"};
     const animatedNumber = {animation: "animatedNumber2 1s infinite"};
@@ -154,8 +195,7 @@ const Principal = () =>{
     const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:"140px",left:"39%",animation: "vaiven 1s infinite"};
     const vaivenDer ={position: "relative",width:"30px",zIndex:"1",top:"130px",left:"58%",animation: "vaiven2 1s infinite"};
     const vaivenAbj ={position: "relative",width:"30px",zIndex:"1",top:"220px",left:"40%",animation: "vaiven 1s infinite"};
-
-
+    
     return(
         <div>
             {lado && <div className="tip" style={(paso==='reducir' || paso==='transponer')?(lado==='column-1'?tipIzquierda:tipDerecha):tipAbajo}>
@@ -172,7 +212,7 @@ const Principal = () =>{
              style={(paso==='reducir'||paso==='transponer')?(lado==='column-1'?vaivenIzq:vaivenDer):vaivenAbj} />}
              <div className="area-ecuacion">
                 <div className="ecuacion">
-                    <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
+                    <DragDropContext onDragStart={dragStart} onDragUpdate={dragUpdate} onDragEnd={dragEnd}>
                     <div id="contexto" className="lista">
                     {
                         data.columnOrder.map(columnId => {
@@ -208,7 +248,7 @@ const Principal = () =>{
                 <div>{error}</div>
              </div>
         </div>
-    );    
+    );
 }
 
 
