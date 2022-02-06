@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {DragDropContext} from 'react-beautiful-dnd'
 import './Principal.css'
 import Column from './Column'
@@ -74,7 +74,6 @@ const Principal = () =>{
     }
 
     const calcularR = (value) =>{
-        console.log(data.answer);
         if(value===data.answer){
             setError("bien!");
             setLado('');
@@ -132,12 +131,12 @@ const Principal = () =>{
             return ;
         if(destination.droppableId === source.droppableId && destination.index === source.index)
             return;
-        console.log(destination.index);
+
         const start = data.columns[source.droppableId];
         const finish = data.columns[destination.droppableId];
 
         if (start===finish){
-            const newTaskIds = Array.from(start.taskIds);
+            /*const newTaskIds = Array.from(start.taskIds);
             newTaskIds.splice(source.index,1);
             newTaskIds.splice(destination.index,0,draggableId);
 
@@ -154,7 +153,7 @@ const Principal = () =>{
                 },
             };
 
-            setData(newData);
+            setData(newData);*/
             return;
         }
 
@@ -164,9 +163,17 @@ const Principal = () =>{
         const newStart = {
             ...start, taskIds: startTaskIds,
         }
-
+        //console.log(finish.taskIds.length);
         const finishTaskIds = Array.from(finish.taskIds);
-        finishTaskIds.splice(destination.index,0,draggableId);
+        //finishTaskIds.splice(destination.index,0,draggableId);
+        const le=finish.taskIds.length
+        finishTaskIds.splice(le,0,draggableId);
+        var newTask1=data.tasks[finish.taskIds[0]]
+        var newTask2=data.tasks[start.taskIds[0]]
+        if(le>0 && data.tasks[finish.taskIds[0]].content[0]==='+')
+            newTask1.content=newTask1.content.substring(1);
+        if(le>0 && data.tasks[start.taskIds[0]].content[0]==='+')
+            newTask2.content=newTask2.content.substring(1);
         const newFinish = {
             ...finish, taskIds: finishTaskIds,
         }
@@ -184,17 +191,33 @@ const Principal = () =>{
         setOrigen('');
     }
 
+    useEffect(() =>{
+        var ok=true;
+        for(var i=0;i<data.columns['column-1'].taskIds.length;i++){
+            if(data.tasks[data.columns['column-1'].taskIds[i]].content.substr(-1)!=='x')
+                ok=false;
+        }
+        for(i=0;i<data.columns['column-2'].taskIds.length;i++){
+            if(!parseInt(data.tasks[data.columns['column-2'].taskIds[i]].content.substr(-1)))
+                ok=false;
+        }
+        if(ok && paso==='transponer'){
+            setError("Listo!");
+            setPaso('reducir');
+        }
+    });
+
 
     const normalNumber = {color: "darkgreen",fontSize:"20pt"};
     const animatedNumber = {animation: "animatedNumber2 1s infinite"};
 
-    const tipIzquierda = {left: "25%",top: "170px"};
+    const tipIzquierda = {left: "30%",top: paso==='reducir'?"160px":"195px"};
     const tipDerecha = {left: "62%",top: "160px"};
-    const tipAbajo = {left: "25%",top: "250px"};
+    const tipAbajo = {left: "33%",top: "280px"};
 
-    const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:"140px",left:"39%",animation: "vaiven 1s infinite"};
+    const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:paso==='reducir'?"140px":"170px",left:paso==='reducir'?"40%":"42%",animation: "vaiven 1s infinite"};
     const vaivenDer ={position: "relative",width:"30px",zIndex:"1",top:"130px",left:"58%",animation: "vaiven2 1s infinite"};
-    const vaivenAbj ={position: "relative",width:"30px",zIndex:"1",top:"220px",left:"40%",animation: "vaiven 1s infinite"};
+    const vaivenAbj ={position: "relative",width:"30px",zIndex:"1",top:"250px",left:"42%",animation: "vaiven 1s infinite"};
     
     return(
         <div>
@@ -232,10 +255,10 @@ const Principal = () =>{
                     </DragDropContext>
                 </div>
                 <div className="ecuacion">
-                    {<input type="text" 
+                    {paso!=='transponer' && <input type="text" 
                      className="reducido" disabled={lado!=='column-1'?true:false} onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value)}/>}
-                    <div className="reducido" style={{color: 'blue',}}>=</div>
-                    {<input type="text"
+                    {paso!=='transponer' && <div className="reducido" style={{color: 'blue',}}>=</div>}
+                    {paso!=='transponer' && <input type="text"
                      className="reducido" disabled={lado!=='column-2'?true:false} onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value)}/>}
                 </div>
                 <div className="ecuacion">
