@@ -60,35 +60,30 @@
 }
 
 .lineal{
-    padding: 20px;
-    /*background-color: rgb(200, 255, 255);
-    border: 1px solid skyblue;*/
-    width:  40px;
     height:  40px;
+    margin: 1px;
     text-align: center;
-    font-size: 28pt;
-    font-weight: bold;    
+    font-size: 20pt;
+    font-weight: bold;
+    color: teal;    
 }
 
 .igual{
-    padding: 20px;
-    /*border: 1px solid gray;*/
-    width:  40px;
     height:  40px;
     text-align: center;
-    font-size: 28pt;
+    margin:  1px;
+    font-size: 20pt;
     font-weight: bold;    
+    color: deeppink;
 }
 
 .constante{
-    padding: 20px;
-    /*background-color: rgb(255, 200, 200);
-    border: 1px solid salmon;*/
-    width:  40px;
     height:  40px;
+    margin:  1px;
     text-align: center;
-    font-size: 28pt;
+    font-size: 20pt;
     font-weight: bold;    
+    color: gold;
 }
 
 .lista{

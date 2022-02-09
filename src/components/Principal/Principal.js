@@ -16,15 +16,19 @@ const Principal = () =>{
             'task-2' : { id: 'task-2', content: '-4'},
             'task-3' : { id: 'task-3', content: '7x'},
             'task-4' : { id: 'task-4', content: '+1'},
+            'task-5' : { id: 'task-5', content: '+2x'},
+            'task-6' : { id: 'task-6', content: '-2'},
+            'task-7' : { id: 'task-7', content: '+x'},
+            'task-8' : { id: 'task-8', content: '-3'},
             'igual' : {id:'igual', content: '='}
         },
         columns:{
-            'column-1' : { id:'column-1', title: 'lineales', taskIds : ['task-1','task-2'],},
+            'column-1' : { id:'column-1', title: 'lineales', taskIds : ['task-1','task-2','task-8','task-5'],},
             'column-0' : { id:'column-0', title: 'signo', taskIds : ['igual']},
-            'column-2' : { id:'column-2', title: 'constantes', taskIds : ['task-3','task-4'],},
+            'column-2' : { id:'column-2', title: 'constantes', taskIds : ['task-3','task-4','task-6','task-7'],},
         },
         columnOrder : ['column-1','column-0','column-2'],
-        answer : '-5/4',
+        answer : '-2',
     };
     
     const [data,setData] = useState(initialData)
@@ -38,7 +42,7 @@ const Principal = () =>{
             return;
         }
         else{
-            if(variable[0]!=='x'){
+            if(variable[0]!=='x'&& variable[0]!=='X'){
                 setError("no es la variable correcta");
                 return;
             }
@@ -47,7 +51,16 @@ const Principal = () =>{
         }    
 
         data.columns['column-1'].taskIds.map( tid =>{
-            suma+=parseInt(data.tasks[tid].content.match(/[+,-]*\d+/g));
+            var num = parseInt(data.tasks[tid].content);
+            //cuando es +x o -x
+            if(isNaN(num)){
+                if(data.tasks[tid].content[0]==="+")
+                    num=1;
+                if(data.tasks[tid].content[0]==="-")
+                    num=-1;
+            }
+            suma+=num;
+            console.log(suma);
         })
         if(suma!==val)
             setError("no es el valor correcto");
@@ -62,7 +75,7 @@ const Principal = () =>{
         var val = parseInt(value);
         
         data.columns['column-2'].taskIds.map( tid =>{
-            suma+=parseInt(data.tasks[tid].content.match(/[+,-]*\d+/g));
+            suma+=parseInt(data.tasks[tid].content);
         })
         if(suma!==val)
             setError("no es el valor correcto");
@@ -98,17 +111,44 @@ const Principal = () =>{
         const arrastradoX=document.getElementById(draggableId).getBoundingClientRect().x;
         const igualX=document.getElementById("column-0").getBoundingClientRect().x;
         const orig=data.tasks[draggableId].content;
-        if(finish && start!==finish && orig === origen){
-            
+
+        if(finish && start!==finish && orig === origen){        
             if((finish==='column-2' && arrastradoX>igualX) || (finish==='column-1' && arrastradoX<igualX)){
-                var cambio=parseInt(orig)*(-1);
+                var cambio=parseInt(orig);
                 var x="";
                 if (orig.match(/[A-Za-z]+/))
                     x=orig.match(/[A-Za-z]+/)[0];
+                //si es +x o -x
+                if(isNaN(cambio)){
+                    if(orig[0]==='+')
+                        cambio=1;
+                    if(orig[0]==='-')
+                        cambio=-1;
+                }
+                cambio=cambio*(-1);
                 
                 const newTask = {
                     ...data.tasks[draggableId],
-                    content: cambio>0?"+"+cambio.toString()+x:cambio.toString()+x,
+                    content: cambio>0?"+"+((cambio==1 && x.length>0)?"":cambio.toString())+x:((cambio==-1 && x.length>0)?"-":cambio.toString())+x,
+                };
+
+                const newData = {
+                    ...data,
+                    tasks: {
+                        ...data.tasks,
+                        [draggableId]: newTask,
+                    },
+                };
+                setData(newData);
+            }
+        }
+        //si se arrepiente luego de pasar al otro lado sin soltar
+        if(finish && start===finish){
+            if((finish==='column-1' && arrastradoX<igualX) || (finish==='column-2' && arrastradoX>igualX)){
+                //console.log(orig," : ",origen); 
+                const newTask = {
+                    ...data.tasks[draggableId],
+                    content: origen,
                 };
 
                 const newData = {
@@ -136,24 +176,6 @@ const Principal = () =>{
         const finish = data.columns[destination.droppableId];
 
         if (start===finish){
-            /*const newTaskIds = Array.from(start.taskIds);
-            newTaskIds.splice(source.index,1);
-            newTaskIds.splice(destination.index,0,draggableId);
-
-            const newColumn ={
-                ...start, taskIds: newTaskIds,
-            };
-
-
-            const newData = {
-                ...data,
-                columns: {
-                    ...data.columns,
-                    [newColumn.id]: newColumn,
-                },
-            };
-
-            setData(newData);*/
             return;
         }
 
@@ -163,17 +185,11 @@ const Principal = () =>{
         const newStart = {
             ...start, taskIds: startTaskIds,
         }
-        //console.log(finish.taskIds.length);
         const finishTaskIds = Array.from(finish.taskIds);
         //finishTaskIds.splice(destination.index,0,draggableId);
         const le=finish.taskIds.length
         finishTaskIds.splice(le,0,draggableId);
-        var newTask1=data.tasks[finish.taskIds[0]]
-        var newTask2=data.tasks[start.taskIds[0]]
-        if(le>0 && data.tasks[finish.taskIds[0]].content[0]==='+')
-            newTask1.content=newTask1.content.substring(1);
-        if(le>0 && data.tasks[start.taskIds[0]].content[0]==='+')
-            newTask2.content=newTask2.content.substring(1);
+        
         const newFinish = {
             ...finish, taskIds: finishTaskIds,
         }
@@ -186,12 +202,39 @@ const Principal = () =>{
                     [newFinish.id]: newFinish,
                 },
             };       
-        
+
         setData(newData);
         setOrigen('');
     }
 
     useEffect(() =>{
+        //cambio de signo
+        const start = data.columns['column-1'];
+        const finish = data.columns['column-2'];
+        var newTask1=data.tasks[finish.taskIds[0]]
+        var newTask2=data.tasks[start.taskIds[0]]
+        var change=false;
+        if(finish.taskIds.length>0 && data.tasks[finish.taskIds[0]].content[0]==='+'){
+            newTask1.content=newTask1.content.substring(1);
+            change=true;
+        }
+        if(start.taskIds.length>0 && data.tasks[start.taskIds[0]].content[0]==='+'){
+            newTask2.content=newTask2.content.substring(1);
+            change=true;
+        }
+        if(change){
+            const newData = {
+                ...data,
+                tasks: {
+                    ...data.tasks,
+                    [start.taskIds[0]]: newTask2,
+                    [finish.taskIds[0]]: newTask1,
+                },
+            };       
+            setData(newData);
+        }
+
+        //comprobación de fin
         var ok=true;
         for(var i=0;i<data.columns['column-1'].taskIds.length;i++){
             if(data.tasks[data.columns['column-1'].taskIds[i]].content.substr(-1)!=='x')
@@ -211,11 +254,11 @@ const Principal = () =>{
     const normalNumber = {color: "darkgreen",fontSize:"20pt"};
     const animatedNumber = {animation: "animatedNumber2 1s infinite"};
 
-    const tipIzquierda = {left: "30%",top: paso==='reducir'?"160px":"195px"};
+    const tipIzquierda = {left: "15%",top: paso==='reducir'?"160px":"195px"};
     const tipDerecha = {left: "62%",top: "160px"};
     const tipAbajo = {left: "33%",top: "280px"};
 
-    const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:paso==='reducir'?"140px":"170px",left:paso==='reducir'?"40%":"42%",animation: "vaiven 1s infinite"};
+    const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:paso==='reducir'?"140px":"170px",left:paso==='reducir'?"40%":"33%",animation: "vaiven 1s infinite"};
     const vaivenDer ={position: "relative",width:"30px",zIndex:"1",top:"130px",left:"58%",animation: "vaiven2 1s infinite"};
     const vaivenAbj ={position: "relative",width:"30px",zIndex:"1",top:"250px",left:"42%",animation: "vaiven 1s infinite"};
     
@@ -234,6 +277,23 @@ const Principal = () =>{
              alt="flecha"
              style={(paso==='reducir'||paso==='transponer')?(lado==='column-1'?vaivenIzq:vaivenDer):vaivenAbj} />}
              <div className="area-ecuacion">
+                <div className="ecuacion">
+                    {
+                        data.columnOrder.map(columnId =>{
+                            const column = data.columns[columnId];
+                            const tasks =column.taskIds.map(taskId => data.tasks[taskId]);
+                            return(
+                                <div key={columnId} style={{display:"flex"}}>                           
+                                    {tasks.map(({id,content}) => 
+                                        <div key={id}
+                                         className={content[content.length-1]==='x'?'lineal':(content==='='?'igual':'constante')}>
+                                        {content}
+                                        </div>)}
+                                </div>
+                            );
+                        })
+                    }
+                </div>
                 <div className="ecuacion">
                     <DragDropContext onDragStart={dragStart} onDragUpdate={dragUpdate} onDragEnd={dragEnd}>
                     <div id="contexto" className="lista">
