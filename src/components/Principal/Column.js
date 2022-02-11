@@ -20,7 +20,8 @@ const Column = (props) =>{
                     {...provided.droppableProps}
                     style={{...provided.droppableProps.style,
                         backgroundColor: snapshot.isDraggingOver ? 'lightgrey' : 'white',
-                        borderColor: props.lado===props.column.id ? 'red' : 'white'}}>
+                        paddingTop: props.paso!=='transponer'?'0px':'30px',
+                        paddingBottom: props.paso!=='transponer'?'0px':'30px'}}>
                     {props.tasks.map((task,index) =>
                     <Task key={task.id} task={task} index={index}/>)}
                     {provided.placeholder}

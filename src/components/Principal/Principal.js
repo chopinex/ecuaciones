@@ -7,19 +7,21 @@ import flecha from './arrow.png'
 const Principal = () =>{
     const [error,setError] = useState('')
     const [lado,setLado] = useState('column-1')
-    const [paso,setPaso] = useState('transponer')
+    const [paso,setPaso] = useState('red0')
     const [origen,setOrigen] = useState('')
+    const [etapa,setEtapa] = useState('lineal')
+    const redFirst=true
 
     const initialData={
         tasks: {
-            'task-1' : { id: 'task-1', content: '3x'},
-            'task-2' : { id: 'task-2', content: '-4'},
-            'task-3' : { id: 'task-3', content: '7x'},
-            'task-4' : { id: 'task-4', content: '+1'},
-            'task-5' : { id: 'task-5', content: '+2x'},
-            'task-6' : { id: 'task-6', content: '-2'},
-            'task-7' : { id: 'task-7', content: '+x'},
-            'task-8' : { id: 'task-8', content: '-3'},
+            'task-1' : { id: 'task-1', content: '3x', tipo: 'lineal' },
+            'task-2' : { id: 'task-2', content: '-4', tipo: 'constante'  },
+            'task-3' : { id: 'task-3', content: '7x', tipo: 'lineal' },
+            'task-4' : { id: 'task-4', content: '+1', tipo: 'constante'  },
+            'task-5' : { id: 'task-5', content: '+2x',tipo: 'lineal' },
+            'task-6' : { id: 'task-6', content: '-2', tipo: 'constante'  },
+            'task-7' : { id: 'task-7', content: '+x', tipo: 'lineal' },
+            'task-8' : { id: 'task-8', content: '-3', tipo: 'constante'  },
             'igual' : {id:'igual', content: '='}
         },
         columns:{
@@ -33,7 +35,36 @@ const Principal = () =>{
     
     const [data,setData] = useState(initialData)
 
-    const calcularL = (value) =>{
+    const actualizacion = () =>{
+        const entradas = document.getElementById('red0Results').getElementsByTagName('input');
+        const newTasks = {
+            'task-1' : { id: 'task-1', content: entradas[0].value, tipo:'lineal' },
+            'task-2' : { id: 'task-2', content: entradas[1].value, tipo:'constante' },
+            'task-3' : { id: 'task-3', content: entradas[2].value, tipo:'lineal' },
+            'task-4' : { id: 'task-4', content: entradas[3].value, tipo:'constante' },
+            'igual': {id:'igual', content: '='}
+        };
+        const newLineal = {
+            ...data.columns['column-1'],taskIds: ['task-1','task-2'],
+        }
+        const newConstante = {
+            ...data.columns['column-2'],taskIds: ['task-3','task-4'],
+        }
+        const newColumns = {
+            ...data.columns,
+            ['column-1'] : newLineal,
+            ['column-2'] : newConstante,
+
+        }
+        const newData = {
+            ...data,
+            tasks:newTasks,
+            columns:newColumns,
+        }
+        setData(newData);
+    }
+
+    const calcularL = (value,col) =>{
         var suma=0;
         var val = parseInt(value);
         var variable=value.match(/[A-Za-z]+/);
@@ -50,7 +81,7 @@ const Principal = () =>{
                 setError("");
         }    
 
-        data.columns['column-1'].taskIds.map( tid =>{
+        data.columns[col].taskIds.map( tid =>{
             var num = parseInt(data.tasks[tid].content);
             //cuando es +x o -x
             if(isNaN(num)){
@@ -59,30 +90,48 @@ const Principal = () =>{
                 if(data.tasks[tid].content[0]==="-")
                     num=-1;
             }
-            suma+=num;
-            console.log(suma);
+            if(data.tasks[tid].tipo==='lineal')
+                suma+=num;
         })
         if(suma!==val)
             setError("no es el valor correcto");
         else{
             setError("bien!!");
-            setLado('column-2');
+            if(paso==='red0')
+                setEtapa('constante');
+            else
+                setLado('column-2');
         }
     }
 
-    const calcularC = (value) =>{
+    const calcularC = (value,col) =>{
         var suma=0;
         var val = parseInt(value);
         
-        data.columns['column-2'].taskIds.map( tid =>{
-            suma+=parseInt(data.tasks[tid].content);
+        data.columns[col].taskIds.map( tid =>{
+            if(data.tasks[tid].tipo==='constante')
+                suma+=parseInt(data.tasks[tid].content);
         })
         if(suma!==val)
             setError("no es el valor correcto");
         else{
             setError("");
-            setLado('column-3');
-            setPaso('despejar')
+            if(paso==='red0'){
+                if(lado==='column-1'){
+                    setLado('column-2');
+                    setEtapa('lineal');
+                }
+                else{
+                    actualizacion();
+                    setPaso('transponer');
+                    setLado('column-1');
+                    setEtapa('');
+                }
+            }
+            else{
+                setLado('column-3');
+                setPaso('despejar');
+            }
         }
     }
 
@@ -129,7 +178,7 @@ const Principal = () =>{
                 
                 const newTask = {
                     ...data.tasks[draggableId],
-                    content: cambio>0?"+"+((cambio==1 && x.length>0)?"":cambio.toString())+x:((cambio==-1 && x.length>0)?"-":cambio.toString())+x,
+                    content: cambio>0?"+"+((cambio===1 && x.length>0)?"":cambio.toString())+x:((cambio===-1 && x.length>0)?"-":cambio.toString())+x,
                 };
 
                 const newData = {
@@ -167,15 +216,18 @@ const Principal = () =>{
     const dragEnd = result =>{
         document.getElementById('contexto').style.color = 'inherit';
         const {destination,source,draggableId} = result;
-        if(!destination)
+        if(!destination){
+            //por si cambia de signo luego de moverse sin soltar en la lista
+            data.tasks[draggableId].content=origen;
             return ;
+        }
         if(destination.droppableId === source.droppableId && destination.index === source.index)
             return;
 
         const start = data.columns[source.droppableId];
         const finish = data.columns[destination.droppableId];
-
         if (start===finish){
+            console.log(finish);
             return;
         }
 
@@ -250,9 +302,13 @@ const Principal = () =>{
         }
     });
 
+    const tempArray = initialData;
 
-    const normalNumber = {color: "darkgreen",fontSize:"20pt"};
+    const normalNumber = {color: "darkgreen",fontSize:"20pt",width:"25px"};
     const animatedNumber = {animation: "animatedNumber2 1s infinite"};
+
+    const normalRedux = {color: "crimson",fontSize:"20pt",width:"25px"};
+    const animatedRedux = {animation: "animatedNumber3 1s infinite"};
 
     const tipIzquierda = {left: "15%",top: paso==='reducir'?"160px":"195px"};
     const tipDerecha = {left: "62%",top: "160px"};
@@ -267,6 +323,7 @@ const Principal = () =>{
             {lado && <div className="tip" style={(paso==='reducir' || paso==='transponer')?(lado==='column-1'?tipIzquierda:tipDerecha):tipAbajo}>
                 {
                     {
+                        'red0' : 'REDUCIR',
                         'reducir' : 'REDUCIR',
                         'transponer' : 'TRANSPONER',
                         'despejar' : 'DESPEJAR',
@@ -277,24 +334,41 @@ const Principal = () =>{
              alt="flecha"
              style={(paso==='reducir'||paso==='transponer')?(lado==='column-1'?vaivenIzq:vaivenDer):vaivenAbj} />}
              <div className="area-ecuacion">
-                <div className="ecuacion">
+                {redFirst && <div className="ecuacion">
                     {
                         data.columnOrder.map(columnId =>{
-                            const column = data.columns[columnId];
-                            const tasks =column.taskIds.map(taskId => data.tasks[taskId]);
+                            const column = tempArray.columns[columnId];
+                            const tasks =column.taskIds.map(taskId => tempArray.tasks[taskId]);
                             return(
                                 <div key={columnId} style={{display:"flex"}}>                           
-                                    {tasks.map(({id,content}) => 
+                                    {tasks.map(({id,content,tipo}) => 
                                         <div key={id}
-                                         className={content[content.length-1]==='x'?'lineal':(content==='='?'igual':'constante')}>
+                                         className="redo"
+                                         style={(columnId===lado && tipo===etapa)?animatedRedux:normalRedux}
+                                         >
                                         {content}
                                         </div>)}
                                 </div>
                             );
                         })
                     }
-                </div>
-                <div className="ecuacion">
+                </div>}
+                {redFirst && <div className="ecuacion" id="red0Results">
+                    <input type="text" 
+                     className="reducido" disabled={(lado!=='column-1' || etapa!=='lineal')?true:false} 
+                     onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value,'column-1')}/>
+                    <input type="text" 
+                     className="reducido" disabled={(lado!=='column-1' || etapa!=='constante')?true:false} 
+                     onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value,'column-1')}/>
+                    <div className="reducido" style={{color: 'blue',width:'20px',}}>=</div>
+                    <input type="text"
+                     className="reducido" disabled={(lado!=='column-2' || etapa!=='lineal')?true:false} 
+                     onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value,'column-2')}/>
+                    <input type="text"
+                     className="reducido" disabled={(lado!=='column-2' || etapa!=='constante')?true:false} 
+                     onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value,'column-2')}/> 
+                </div>}
+                {paso!=='red0' && <div className="ecuacion">
                     <DragDropContext onDragStart={dragStart} onDragUpdate={dragUpdate} onDragEnd={dragEnd}>
                     <div id="contexto" className="lista">
                     {
@@ -313,17 +387,19 @@ const Principal = () =>{
                     }
                     </div>
                     </DragDropContext>
-                </div>
-                <div className="ecuacion">
-                    {paso!=='transponer' && <input type="text" 
-                     className="reducido" disabled={lado!=='column-1'?true:false} onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value)}/>}
-                    {paso!=='transponer' && <div className="reducido" style={{color: 'blue',}}>=</div>}
-                    {paso!=='transponer' && <input type="text"
-                     className="reducido" disabled={lado!=='column-2'?true:false} onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value)}/>}
-                </div>
+                </div>}
+                {(paso==='reducir' || paso==='despejar') &&  <div className="ecuacion">
+                    <input type="text" 
+                     className="reducido" disabled={lado!=='column-1'?true:false} 
+                     onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value,'column-1')}/>
+                    <div className="reducido" style={{color: 'blue',width:'20px',}}>=</div>
+                    <input type="text"
+                     className="reducido" disabled={lado!=='column-2'?true:false} 
+                     onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value,'column-2')}/>
+                </div>}
                 <div className="ecuacion">
                     {paso=== 'despejar' && <label className="despejado" style={lado==='column-3'?animatedNumber:normalNumber}>x</label>}
-                    {paso==='despejar' && <div className="despejado">=</div>}
+                    {paso==='despejar' && <div className="despejado" style={{width:'20px',}}>=</div>}
                     {paso==='despejar' && <input type="text"
                      className="despejado" disabled={lado===''?true:false} onKeyPress={e => e.key === 'Enter' && calcularR(e.target.value)}/>}
 

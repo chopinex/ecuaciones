@@ -22,7 +22,7 @@
     font-weight: bold;
     width: 60px;
     text-align: center;
-    padding: 8px 0;
+    padding: 4px 0;
 }
 
 .reducido:enabled{
@@ -33,6 +33,7 @@
 .reducido:disabled{
     border: 0px;
     color: blue;
+    width: 40px;
 }
 
 .despejado{
@@ -41,8 +42,11 @@
     width: 70px;
     height: 50px;
     text-align: center;
-    padding: 8px 0;
+    padding: 4px 0;
     color: darkgreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .despejado:enabled{
@@ -53,37 +57,22 @@
 .despejado:disabled{
     border: 0px;
     color: darkgreen;
+    width: 40px;
 }
 
 .ecuacion{
     display:  flex;
 }
 
-.lineal{
+.redo{
     height:  40px;
-    margin: 1px;
+    margin: 0 4px 4px 4px;
     text-align: center;
     font-size: 20pt;
     font-weight: bold;
-    color: teal;    
-}
-
-.igual{
-    height:  40px;
-    text-align: center;
-    margin:  1px;
-    font-size: 20pt;
-    font-weight: bold;    
-    color: deeppink;
-}
-
-.constante{
-    height:  40px;
-    margin:  1px;
-    text-align: center;
-    font-size: 20pt;
-    font-weight: bold;    
-    color: gold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .lista{
@@ -94,6 +83,12 @@
     0%{color: darkgreen;font-size:24pt;} 
     50%{color: lightgreen;font-size:32pt;}
    100%{color: darkgreen;font-size:24pt;}
+}
+
+@keyframes animatedNumber3{
+    0%{color: maroon;font-size:24pt;} 
+    50%{color: peachpuff;font-size:32pt;}
+   100%{color: maroon;font-size:24pt;}
 }
 
 @keyframes vaiven{

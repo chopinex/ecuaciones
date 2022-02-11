@@ -13,7 +13,9 @@
 
 .task-list{
     padding: 30px 2px;
-    display:  flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @keyframes animatedNumber{
