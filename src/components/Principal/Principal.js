@@ -300,7 +300,7 @@ const Principal = () =>{
             setError("Listo!");
             setPaso('reducir');
         }
-    });
+    },[data,paso]);
 
     const tempArray = initialData;
 
@@ -310,29 +310,55 @@ const Principal = () =>{
     const normalRedux = {color: "crimson",fontSize:"20pt",width:"25px"};
     const animatedRedux = {animation: "animatedNumber3 1s infinite"};
 
-    const tipIzquierda = {left: "15%",top: paso==='reducir'?"160px":"195px"};
-    const tipDerecha = {left: "62%",top: "160px"};
-    const tipAbajo = {left: "33%",top: "280px"};
+    const tipIzquierda0 = {left: "25%",top: "200px"};
+    const tipIzquierda = {left: "32%",top: "210px"};
+    const tipTransponer = {left: "30%",top: "235px"};
+    const tipDerecha0 = {left: "64%",top: "200px"};
+    const tipDerecha = {left: "60%",top: "210px"};
+    const tipAbajo = {left: "33%",top: "285px"};
 
-    const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:paso==='reducir'?"140px":"170px",left:paso==='reducir'?"40%":"33%",animation: "vaiven 1s infinite"};
-    const vaivenDer ={position: "relative",width:"30px",zIndex:"1",top:"130px",left:"58%",animation: "vaiven2 1s infinite"};
-    const vaivenAbj ={position: "relative",width:"30px",zIndex:"1",top:"250px",left:"42%",animation: "vaiven 1s infinite"};
+    const vaivenIzq0 ={position: "relative",width:"30px",zIndex:"1",top:"140px",left:"35%",animation: "vaiven 1s infinite"};
+    const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:"180px",left:"40%",animation: "vaiven 1s infinite"};
+    const vaivenTrp ={position: "relative",width:"30px",zIndex:"1",top:"205px",left:"42%",animation: "vaiven 1s infinite"};
+    const vaivenDer0 ={position: "relative",width:"30px",zIndex:"1",top:"142px",left:"61%",animation: "vaiven2 1s infinite"};
+    const vaivenDer ={position: "relative",width:"30px",zIndex:"1",top:"180px",left:"57%",animation: "vaiven2 1s infinite"};
+    const vaivenAbj ={position: "relative",width:"30px",zIndex:"1",top:"260px",left:"42%",animation: "vaiven 1s infinite"};
     
     return(
         <div>
-            {lado && <div className="tip" style={(paso==='reducir' || paso==='transponer')?(lado==='column-1'?tipIzquierda:tipDerecha):tipAbajo}>
+            {lado && <div className="tip"
+             style={
+                {
+                    'red0-column-1':tipIzquierda0,
+                    'red0-column-2':tipDerecha0,
+                    'transponer-column-1':tipTransponer,
+                    'reducir-column-1':tipIzquierda,
+                    'reducir-column-2':tipDerecha,
+                    'despejar-column-3':tipAbajo,
+                }[paso+'-'+lado]
+             }>
                 {
                     {
-                        'red0' : 'REDUCIR',
-                        'reducir' : 'REDUCIR',
-                        'transponer' : 'TRANSPONER',
-                        'despejar' : 'DESPEJAR',
-                    }[paso]
+                        'red0-lineal' : 'REDUCIR TERMINOS LINEALES',
+                        'red0-constante' : 'REDUCIR TERMINOS CONSTANTES',
+                        'reducir-' : 'REDUCIR',
+                        'transponer-' : 'TRANSPONER',
+                        'despejar-' : 'DESPEJAR',
+                    }[paso+'-'+etapa]
                 }
             </div>}
             {lado && <img src={flecha}
              alt="flecha"
-             style={(paso==='reducir'||paso==='transponer')?(lado==='column-1'?vaivenIzq:vaivenDer):vaivenAbj} />}
+             style={
+                {
+                    'red0-column-1':vaivenIzq0,
+                    'red0-column-2':vaivenDer0,
+                    'transponer-column-1':vaivenTrp,
+                    'reducir-column-1':vaivenIzq,
+                    'reducir-column-2':vaivenDer,
+                    'despejar-column-3':vaivenAbj,
+                }[paso+'-'+lado]
+             } />}
              <div className="area-ecuacion">
                 {redFirst && <div className="ecuacion">
                     {
