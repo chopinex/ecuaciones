@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {DragDropContext} from 'react-beautiful-dnd'
 import './Principal.css'
 import Column from './Column'
+import BarraLateral from './BarraLateral'
 import flecha from './arrow.png'
 
 const Principal = () =>{
@@ -52,8 +53,8 @@ const Principal = () =>{
         }
         const newColumns = {
             ...data.columns,
-            ['column-1'] : newLineal,
-            ['column-2'] : newConstante,
+            'column-1' : newLineal,
+            'column-2' : newConstante,
 
         }
         const newData = {
@@ -310,22 +311,22 @@ const Principal = () =>{
     const normalRedux = {color: "crimson",fontSize:"20pt",width:"25px"};
     const animatedRedux = {animation: "animatedNumber3 1s infinite"};
 
-    const tipIzquierda0 = {left: "25%",top: "200px"};
-    const tipIzquierda = {left: "32%",top: "210px"};
-    const tipTransponer = {left: "30%",top: "235px"};
-    const tipDerecha0 = {left: "64%",top: "200px"};
-    const tipDerecha = {left: "60%",top: "210px"};
-    const tipAbajo = {left: "33%",top: "285px"};
+    const tipIzquierda0 = {left: "20%",top: "180px"};
+    const tipIzquierda = {left: "28%",top: "250px"};
+    const tipTransponer = {left: "26%",top: "280px"};
+    const tipDerecha0 = {left: "64%",top: "180px"};
+    const tipDerecha = {left: "58%",top: "250px"};
+    const tipAbajo = {left: "30%",top: "325px"};
 
-    const vaivenIzq0 ={position: "relative",width:"30px",zIndex:"1",top:"140px",left:"35%",animation: "vaiven 1s infinite"};
-    const vaivenIzq ={position: "relative",width:"30px",zIndex:"1",top:"180px",left:"40%",animation: "vaiven 1s infinite"};
-    const vaivenTrp ={position: "relative",width:"30px",zIndex:"1",top:"205px",left:"42%",animation: "vaiven 1s infinite"};
-    const vaivenDer0 ={position: "relative",width:"30px",zIndex:"1",top:"142px",left:"61%",animation: "vaiven2 1s infinite"};
-    const vaivenDer ={position: "relative",width:"30px",zIndex:"1",top:"180px",left:"57%",animation: "vaiven2 1s infinite"};
-    const vaivenAbj ={position: "relative",width:"30px",zIndex:"1",top:"260px",left:"42%",animation: "vaiven 1s infinite"};
+    const vaivenIzq0 ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"210px",left:"24%",animation: "vaiven 1s infinite"};
+    const vaivenIzq ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"250px",left:"30%",animation: "vaiven 1s infinite"};
+    const vaivenTrp ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"280px",left:"32%",animation: "vaiven 1s infinite"};
+    const vaivenDer0 ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"210px",left:"54%",animation: "vaiven2 1s infinite"};
+    const vaivenDer ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"250px",left:"48%",animation: "vaiven2 1s infinite"};
+    const vaivenAbj ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"330px",left:"33%",animation: "vaiven 1s infinite"};
     
     return(
-        <div>
+        <div className="contenido">
             {lado && <div className="tip"
              style={
                 {
@@ -432,6 +433,7 @@ const Principal = () =>{
                 </div>
                 <div>{error}</div>
              </div>
+             <BarraLateral />
         </div>
     );
 }

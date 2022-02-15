@@ -19,7 +19,7 @@
 }
 
 @keyframes animatedNumber{
-    0%{color: red;font-size:24pt;} 
-    50%{color: orange;font-size:32pt;}
-   100%{color: red;font-size:24pt;}
+    0%{color: red;font-size:24pt;text-shadow: 0 0 4px #f66;} 
+    50%{color: orange;font-size:32pt;text-shadow: 0 0 4px #630, 0 0 8px #940, 0 0 12px #ff0;}
+   100%{color: red;font-size:24pt;text-shadow: 0 0 4px #f66;}
 }

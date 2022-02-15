@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Merriweather:ital,wght@1,700&display=swap');
+
+.barra{
+	width: 200px;
+}
+
+.nivel{
+	font-size: 16pt;
+	font-family: 'Lato';
+	color: white;
+	background-color: navy;
+}
+
+.nivel-titulo{
+	margin: 0 5px;
+	padding: 5px 0;
+	cursor: pointer;
+}
+
+.ejercicio{
+	font-size: 13pt;
+	padding:  4px 0 4px 10px;
+	font-family: 'Merriweather', cursive;
+	border: lightblue 1px solid;
+	color: lightblue;
+}

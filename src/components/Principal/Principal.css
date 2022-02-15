@@ -1,7 +1,11 @@
+.contenido {
+    display: flex;
+}
+
 .area-ecuacion{
-    margin:  0 auto;
+    margin:  100px auto;
     height:  300px;
-    width:  600px;
+    width:  70%;
     border: 1px solid black;
 
     display:  flex;
@@ -81,15 +85,15 @@
 }
 
 @keyframes animatedNumber2{
-    0%{color: darkgreen;font-size:24pt;} 
-    50%{color: lightgreen;font-size:32pt;}
-   100%{color: darkgreen;font-size:24pt;}
+    0%{color: darkgreen;font-size:24pt;text-shadow: 0 0 3px #033;} 
+    50%{color: lightgreen;font-size:32pt;text-shadow: 0 0 3px #033, 0 0 12px #39c;}
+   100%{color: darkgreen;font-size:24pt;text-shadow: 0 0 3px #033;}
 }
 
 @keyframes animatedNumber3{
-    0%{color: maroon;font-size:24pt;} 
-    50%{color: peachpuff;font-size:32pt;}
-   100%{color: maroon;font-size:24pt;}
+    0%{color: maroon;font-size:24pt;text-shadow: 0 0 3px #f66;} 
+    50%{color: salmon;font-size:32pt;text-shadow: 0 0 5px #633, 0 0 12px #f00;}
+   100%{color: maroon;font-size:24pt;text-shadow: 0 0 3px #f66;}
 }
 
 @keyframes vaiven{
