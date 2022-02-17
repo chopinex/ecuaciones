@@ -8,32 +8,14 @@ import flecha from './arrow.png'
 const Principal = () =>{
     const [error,setError] = useState('')
     const [lado,setLado] = useState('column-1')
-    const [paso,setPaso] = useState('red0')
+    const [paso,setPaso] = useState('reducir')
     const [origen,setOrigen] = useState('')
     const [etapa,setEtapa] = useState('lineal')
-    const redFirst=true
+    const redFirst=false
 
-    const initialData={
-        tasks: {
-            'task-1' : { id: 'task-1', content: '3x', tipo: 'lineal' },
-            'task-2' : { id: 'task-2', content: '-4', tipo: 'constante'  },
-            'task-3' : { id: 'task-3', content: '7x', tipo: 'lineal' },
-            'task-4' : { id: 'task-4', content: '+1', tipo: 'constante'  },
-            'task-5' : { id: 'task-5', content: '+2x',tipo: 'lineal' },
-            'task-6' : { id: 'task-6', content: '-2', tipo: 'constante'  },
-            'task-7' : { id: 'task-7', content: '+x', tipo: 'lineal' },
-            'task-8' : { id: 'task-8', content: '-3', tipo: 'constante'  },
-            'igual' : {id:'igual', content: '='}
-        },
-        columns:{
-            'column-1' : { id:'column-1', title: 'lineales', taskIds : ['task-1','task-2','task-8','task-5'],},
-            'column-0' : { id:'column-0', title: 'signo', taskIds : ['igual']},
-            'column-2' : { id:'column-2', title: 'constantes', taskIds : ['task-3','task-4','task-6','task-7'],},
-        },
-        columnOrder : ['column-1','column-0','column-2'],
-        answer : '-2',
-    };
-    
+    const allData = require('../../data/ecuaciones.json');
+    const initialData = allData['ejercicio-1'];
+
     const [data,setData] = useState(initialData)
 
     const actualizacion = () =>{
@@ -68,6 +50,13 @@ const Principal = () =>{
     const calcularL = (value,col) =>{
         var suma=0;
         var val = parseInt(value);
+        console.log(suma," ",val);
+        if(isNaN(val)){
+            if(value[0]==='-')
+                val=-1;
+            if(['+','x','y','z'].includes(value[0]))
+                val=1;
+        }
         var variable=value.match(/[A-Za-z]+/);
         if(!variable){
             setError("no hay variable!");

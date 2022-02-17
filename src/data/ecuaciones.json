@@ -1,0 +1,612 @@
+{
+    "ejercicio-1": {
+        "nivel": "1",
+        "id": "1",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "8x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-7x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "12",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "-5",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "7"
+    },
+    "ejercicio-2": {
+        "nivel": "1",
+        "id": "2",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "9x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-8x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "6",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "+7",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "13"
+    },
+    "ejercicio-3": {
+        "nivel": "1",
+        "id": "3",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "3x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-2x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "4",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "-3",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "1"
+    },
+    "ejercicio-4": {
+        "nivel": "1",
+        "id": "4",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "7x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-6x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "4",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "+8",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "12"
+    },
+    "ejercicio-5": {
+        "nivel": "1",
+        "id": "5",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "6x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-5x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "14",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "-8",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "6"
+    },
+    "ejercicio-6": {
+        "nivel": "1",
+        "id": "6",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "5x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-4x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "13",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "+14",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "27"
+    },
+    "ejercicio-7": {
+        "nivel": "1",
+        "id": "7",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "4x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-3x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "16",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "-9",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "7"
+    },
+    "ejercicio-8": {
+        "nivel": "1",
+        "id": "8",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "2x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "23",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "+18",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "41"
+    },
+    "ejercicio-9": {
+        "nivel": "1",
+        "id": "9",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "10x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-9x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "27",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "-18",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "9"
+    },
+    "ejercicio-10": {
+        "nivel": "1",
+        "id": "10",
+        "tasks": {
+            "task-1": {
+                "id": "task-1",
+                "content": "11x",
+                "tipo": "lineal"
+            },
+            "task-2": {
+                "id": "task-2",
+                "content": "-10x",
+                "tipo": "lineal"
+            },
+            "igual": {
+                "id": "igual",
+                "content": "="
+            },
+            "task-3": {
+                "id": "task-3",
+                "content": "15",
+                "tipo": "constante"
+            },
+            "task-4": {
+                "id": "task-4",
+                "content": "+17",
+                "tipo": "constante"
+            }
+        },
+        "columns": {
+            "column-1": {
+                "id": "column-1",
+                "title": "lineales",
+                "taskIds": [
+                    "task-1",
+                    "task-2"
+                ]
+            },
+            "column-0": {
+                "id": "column-0",
+                "title": "signo",
+                "taskIds": [
+                    "igual"
+                ]
+            },
+            "column-2": {
+                "id": "column-2",
+                "title": "constantes",
+                "taskIds": [
+                    "task-3",
+                    "task-4"
+                ]
+            }
+        },
+        "columnOrder": [
+            "column-1",
+            "column-0",
+            "column-2"
+        ],
+        "answer": "33"
+    }
+}
