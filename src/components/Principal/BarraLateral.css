@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Merriweather:ital,wght@1,700&display=swap');
 
 .barra{
-	width: 200px;
+	width: 15%;
+	position:  absolute;
+	right: 0;
+	top: 50px;
 }
 
 .nivel{
