@@ -15,25 +15,23 @@ const Principal = () =>{
     //const initialData = allData['ejercicio-1'];
 
     const tipIzquierda0 = {left: "20%",top: "180px"};
-    const tipIzquierda = {left: "28%",top: "250px"};
+    const tipIzquierda = {left: "22vw",top: "32vh"};
     const tipTransponer = {left: "26%",top: "280px"};
     const tipDerecha0 = {left: "64%",top: "180px"};
-    const tipDerecha = {left: "58%",top: "250px"};
+    const tipDerecha = {left: "55vw",top: "30vh"};
     const tipAbajo = {left: "30%",top: "325px"};
 
-    const vaivenIzq0 ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"210px",left:"24%",animation: "vaiven 1s infinite"};
-    const vaivenIzq ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"250px",left:"30%",animation: "vaiven 1s infinite"};
-    const vaivenTrp ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"280px",left:"32%",animation: "vaiven 1s infinite"};
-    const vaivenDer0 ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"210px",left:"54%",animation: "vaiven2 1s infinite"};
-    const vaivenDer ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"250px",left:"48%",animation: "vaiven2 1s infinite"};
-    const vaivenAbj ={position: "relative",width:"30px",height:"30px",zIndex:"-1",top:"330px",left:"33%",animation: "vaiven 1s infinite"};
+    const vaivenIzq0 ={position: "relative",width:"30px",height:"30px",top:"210px",zIndex:"-1",left:"24%",animation: "vaiven 1s infinite"};
+    const vaivenIzq ={position: "relative",width:"30px",height:"30px",top:"32vh",zIndex:"-1",left:"32vw",animation: "vaiven 1s infinite"};
+    const vaivenTrp ={position: "relative",width:"30px",height:"30px",top:"280px",zIndex:"-1",left:"32%",animation: "vaiven 1s infinite"};
+    const vaivenDer0 ={position: "relative",width:"30px",height:"30px",top:"210px",zIndex:"-1",left:"54%",animation: "vaiven2 1s infinite"};
+    const vaivenDer ={position: "relative",width:"30px",height:"30px",top:"30vh",zIndex:"-1",left:"50vw",animation: "vaiven2 1s infinite"};
+    const vaivenAbj ={position: "relative",width:"30px",height:"30px",top:"330px",zIndex:"-1",left:"33%",animation: "vaiven 1s infinite"};
 
     useEffect(() => {
-        var bodyRect = document.body.getBoundingClientRect(),
-        elemRect = document.getElementById("ejercicio-"+ecuaID).getBoundingClientRect(),
-        offset   = elemRect.top - bodyRect.top;
-        console.log(elemRect.top);
-        window.scrollTo(0, offset)
+        var offset   = document.getElementById("ejercicio-"+ecuaID).offsetTop;
+        var alto   = document.getElementById("ejercicio-"+ecuaID).offsetHeight;
+        window.scrollTo(0, offset+alto)
     }, [ecuaID])
     
     return(
@@ -82,6 +80,7 @@ const Principal = () =>{
                          setPaso={setPaso}
                          setLado={setLado}
                          setEtapa={setEtapa}
+                         ejercicioID={ecuacionId}
                          numEc={ecuaID}
                          setEcuacion={setEcuaID}/>
                     );

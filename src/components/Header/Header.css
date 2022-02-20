@@ -4,6 +4,8 @@ header{
     flex-direction: row;            /* default value; can be omitted */
     flex-wrap: nowrap;              /* default value; can be omitted */
     justify-content: space-between;
+    position: fixed;
+    width: 100%;
 }
 
 .logo{

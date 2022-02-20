@@ -132,8 +132,8 @@ const AreaEcuacion = (props) =>{
                 }
                 //acabamos!!
                 else{
-                    setLado('');
-                    props.setLado('');   
+                    setLado('column-1');
+                    props.setLado('column-1');   
                     setError("bien!");
                     props.setEcuacion(props.numEc+1);
                 }
@@ -327,7 +327,7 @@ const AreaEcuacion = (props) =>{
     const animatedRedux = {animation: "animatedNumber3 1s infinite"};
 
     return(
-        <div className="area-ecuacion" id={"ejercicio-"+props.numEc}>
+        <div className="area-ecuacion" id={props.ejercicioID}>
                 {props.redFirst && <div className="ecuacion">
                     {
                         data.columnOrder.map(columnId =>{

@@ -2,9 +2,9 @@
 
 .barra{
 	width: 15%;
-	position:  absolute;
+	position:  fixed;
 	right: 0;
-	top: 50px;
+	top: 52px;
 }
 
 .nivel{
