@@ -8,24 +8,26 @@ const Principal = () =>{
     const [lado,setLado] = useState('column-1')
     const [paso,setPaso] = useState('reducir')
     const [etapa,setEtapa] = useState('')
+    const [nivID,setNivID] = useState(1)
     const [ecuaID,setEcuaID] = useState(1)
     const redFirst=false
 
     const allData = require('../../data/ecuaciones.json');
-    //const initialData = allData['ejercicio-1'];
 
     const tipIzquierda0 = {left: "20%",top: "180px"};
-    const tipIzquierda = {left: "22vw",top: "32vh"};
+    const tipIzquierda = {left: "22vw",top: (32+70*(ecuaID-1)).toString()+"vh"};
     const tipTransponer = {left: "26%",top: "280px"};
     const tipDerecha0 = {left: "64%",top: "180px"};
-    const tipDerecha = {left: "55vw",top: "30vh"};
+    const tipDerecha = {left: "55vw",top: (30+70*(ecuaID-1)).toString()+"vh"};
     const tipAbajo = {left: "30%",top: "325px"};
 
     const vaivenIzq0 ={position: "relative",width:"30px",height:"30px",top:"210px",zIndex:"-1",left:"24%",animation: "vaiven 1s infinite"};
-    const vaivenIzq ={position: "relative",width:"30px",height:"30px",top:"32vh",zIndex:"-1",left:"32vw",animation: "vaiven 1s infinite"};
+    const vaivenIzq ={position: "relative",width:"30px",height:"30px",
+                      top:(32+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",left:"32vw",animation: "vaiven 1s infinite"};
     const vaivenTrp ={position: "relative",width:"30px",height:"30px",top:"280px",zIndex:"-1",left:"32%",animation: "vaiven 1s infinite"};
     const vaivenDer0 ={position: "relative",width:"30px",height:"30px",top:"210px",zIndex:"-1",left:"54%",animation: "vaiven2 1s infinite"};
-    const vaivenDer ={position: "relative",width:"30px",height:"30px",top:"30vh",zIndex:"-1",left:"50vw",animation: "vaiven2 1s infinite"};
+    const vaivenDer ={position: "relative",width:"30px",height:"30px",
+                      top:(30+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",left:"50vw",animation: "vaiven2 1s infinite"};
     const vaivenAbj ={position: "relative",width:"30px",height:"30px",top:"330px",zIndex:"-1",left:"33%",animation: "vaiven 1s infinite"};
 
     useEffect(() => {
@@ -87,7 +89,7 @@ const Principal = () =>{
                 }
             )}
             </div>
-             <BarraLateral />
+             <BarraLateral initialData={allData} numNiv={nivID} numEc={ecuaID}/>
         </div>
     );
 }
