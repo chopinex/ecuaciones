@@ -10,6 +10,7 @@ const AreaEcuacion = (props) =>{
     const [origen,setOrigen] = useState('')
     const [etapa,setEtapa] = useState('')
     const [inputValue,setInputValue] = useState('')
+    const [input2Value,setInput2Value] = useState('')
 
     const [data,setData] = useState(props.initialData)
 
@@ -154,6 +155,10 @@ const AreaEcuacion = (props) =>{
 
     const handleChange = (e) =>{
         setInputValue(e.target.value);
+    }
+
+    const handleChange2 = (e) =>{
+        setInput2Value(e.target.value);
     }
 
     const updateX = (value) =>{
@@ -318,6 +323,17 @@ const AreaEcuacion = (props) =>{
         }
     },[data,paso]);
 
+    useEffect(() => {
+        console.log(document.activeElement.id);
+        if(error===''&&inputValue!==''&&document.activeElement.id==='reducirLineal')
+            setTimeout(() => setError('Presiona Enter para confirmar tu respuesta'),4000);
+        if(error===''&&input2Value!==''&&document.activeElement.id==='reducirConstante')
+            setTimeout(() => setError('Presiona Enter para confirmar tu respuesta'),4000);
+        if(error!=='')
+            setTimeout(() => setError(''),5000);
+    },[inputValue,input2Value,error]);
+
+
     const tempArray = props.initialData;
 
     const normalNumber = {color: "darkgreen",fontSize:"20pt",width:"25px"};
@@ -392,7 +408,9 @@ const AreaEcuacion = (props) =>{
                      onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value,'column-1')}/>
                     <div className="reducido" style={{color: 'blue',width:'20px',}}>=</div>
                     <input type="text"
-                     className="reducido" disabled={lado!=='column-2'?true:false} 
+                     className="reducido" disabled={lado!=='column-2'?true:false}
+                     id="reducirConstante"
+                     onChange={handleChange2}
                      onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value,'column-2')}/>
                 </div>}
                 {paso=== 'despejar' && <div className="ecuacion">

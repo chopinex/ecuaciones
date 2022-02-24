@@ -1,0 +1,6 @@
+form{
+	display: flex;
+	flex-direction: column;
+	padding-top: 200px;
+	background-color: grey;
+}
