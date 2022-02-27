@@ -21,8 +21,8 @@ const Header = () =>{
                 </>
                 :
                 <>
-                    <div className="menu-head puntero">Accede</div>
-                    <div  className="menu-head puntero" onClick={() => navigate("/registro")}>Regístrate</div>
+                    <div className="menu-head puntero" onClick={() => navigate("/")}>Accede</div>
+                    <div className="menu-head puntero" onClick={() => navigate("/registro")}>Regístrate</div>
                 </>
             }
             </div>
