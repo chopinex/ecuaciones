@@ -3,6 +3,7 @@ import Header from './components/Header/Header'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Principal from './components/Principal/Principal'
 import Login from './components/Login/Login'
+import Registro from './components/Login/Registro'
 import PrivateRoute from './PrivateRoute'
 import { AuthProvider } from './Auth'
 
@@ -14,6 +15,7 @@ function App() {
         <Header/>
         <Routes>
           <Route exact path="/" element={<Login/>} />
+          <Route exact path="/registro" element={<Registro/>} />
           <Route exact path="/inicio" element={<PrivateRoute/>}>
             <Route exact path="/inicio" element={<Principal/>} />
           </Route>

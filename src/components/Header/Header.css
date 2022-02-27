@@ -21,3 +21,7 @@ header{
 .menu-head{
     margin: 20px 10px 0 0;  
 }
+
+.puntero{
+    cursor: pointer;
+}

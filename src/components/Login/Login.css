@@ -2,5 +2,44 @@ form{
 	display: flex;
 	flex-direction: column;
 	padding-top: 200px;
-	background-color: grey;
+	margin: 0 auto;
+	width: 30%;
+}
+
+label{
+	padding-top: 20px;
+	font-size: 12pt;
+	color: skyblue;
+}
+
+input:focus{
+	outline: 3px solid steelblue;
+	border: none;
+	color: steelblue;
+}
+
+input{
+	font-size: 16pt;
+	border: 1px solid skyblue;
+	border-radius: 5px;
+	width:  80%;
+	margin:  0 auto;
+	transition: all .25s ease;
+	color:  skyblue;
+}
+
+input[type="submit"]{
+	background-color: skyblue;
+	color: steelblue;
+	margin-top: 20px;	
+	width:  30%;
+}
+
+input[type="submit"]:hover{
+	background-color: navy;
+	color: white;
+}
+
+.msg-error{
+	color: red;
 }

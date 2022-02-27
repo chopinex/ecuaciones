@@ -1,13 +1,30 @@
-import React from 'react'
+import React,{ useContext } from 'react'
 import './Header.css'
+import { AuthContext } from '../../Auth'
+import { getAuth,signOut } from "firebase/auth";
+import { useNavigate } from 'react-router-dom'
 
 const Header = () =>{
+    const navigate =useNavigate();
+
+    const {user} = useContext(AuthContext);
+    const auth = getAuth();
+
     return(
         <header>
             <div className="logo">Logo</div>
             <div className="menu">
-                <div className="menu-head">Accede</div>
-                <div  className="menu-head">Regístrate</div>
+            {user?
+                <>
+                    <div className="menu-head">Hola {user.email}</div>
+                    <div className="menu-head puntero" onClick={() => signOut(auth)}>Salir</div>
+                </>
+                :
+                <>
+                    <div className="menu-head puntero">Accede</div>
+                    <div  className="menu-head puntero" onClick={() => navigate("/registro")}>Regístrate</div>
+                </>
+            }
             </div>
         </header>
     );

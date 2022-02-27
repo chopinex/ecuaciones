@@ -29,11 +29,12 @@ const Login=() =>{
 
 	return(
 		<form onSubmit={handleLogin}>
+			<h1>Login</h1>
 			<label>Email</label>
 			<input name="email" type="email" />
 			<label>Contraseña</label>
 			<input name="password" type="password" />
-			<input type="submit" />
+			<input type="submit" value="Accede" />
 		</form>
 	);
 }
