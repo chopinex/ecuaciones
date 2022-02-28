@@ -33,7 +33,7 @@ const Principal = () =>{
     useEffect(() => {
         var offset   = document.getElementById("ejercicio-"+ecuaID).offsetTop;
         var alto   = document.getElementById("ejercicio-"+ecuaID).offsetHeight;
-        window.scrollTo({left : 0, top: offset+alto, behavior: 'smooth'})
+        window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'})
     }, [ecuaID])
     
     return(

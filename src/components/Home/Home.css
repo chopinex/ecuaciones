@@ -1,0 +1,23 @@
+.portada{
+	padding-top: 150px;
+	margin-bottom: 150px;
+}
+
+h1{
+	font-size: 28pt;
+	text-align: center;
+}
+
+img{
+	margin: 0 auto;
+	display: block;
+}
+a{
+	display: block;
+	text-align: center;
+}
+
+.space{
+	color: white;
+	height: 150px;
+}

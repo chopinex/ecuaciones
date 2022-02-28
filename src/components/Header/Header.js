@@ -12,7 +12,7 @@ const Header = () =>{
 
     return(
         <header>
-            <div className="logo">Logo</div>
+            <div className="logo" onClick={() => navigate("/")}>Logo</div>
             <div className="menu">
             {user?
                 <>
@@ -21,7 +21,7 @@ const Header = () =>{
                 </>
                 :
                 <>
-                    <div className="menu-head puntero" onClick={() => navigate("/")}>Accede</div>
+                    <div className="menu-head puntero" onClick={() => navigate("/login")}>Accede</div>
                     <div className="menu-head puntero" onClick={() => navigate("/registro")}>Regístrate</div>
                 </>
             }
