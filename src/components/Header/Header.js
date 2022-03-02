@@ -16,7 +16,7 @@ const Header = () =>{
             <div className="menu">
             {user?
                 <>
-                    <div className="menu-head">Hola {user.email}</div>
+                    <div className="menu-head">{user.displayName}</div>
                     <div className="menu-head puntero" onClick={() => signOut(auth)}>Salir</div>
                 </>
                 :

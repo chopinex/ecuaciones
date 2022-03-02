@@ -125,7 +125,7 @@ const AreaEcuacion = (props) =>{
                 }
             }
             else{
-                if (document.getElementById("reducirLineal").value!=='x'){
+                if (document.getElementById("reducirLineal-"+props.nivel+"-"+props.numEc).value!=='x'){
                     setPaso('despejar');
                     props.setPaso('despejar');
                     setLado('column-3');
@@ -324,7 +324,7 @@ const AreaEcuacion = (props) =>{
     },[data,paso]);
 
     useEffect(() => {
-        console.log(document.activeElement.id);
+        //console.log(document.activeElement.id);
         if(error===''&&inputValue!==''&&document.activeElement.id==='reducirLineal')
             setTimeout(() => setError('Presiona Enter para confirmar tu respuesta'),4000);
         if(error===''&&input2Value!==''&&document.activeElement.id==='reducirConstante')
@@ -401,7 +401,7 @@ const AreaEcuacion = (props) =>{
                 {(paso==='reducir' || paso==='despejar') &&  <div className="ecuacion">
                     <input type="text" 
                      className="reducido" disabled={lado!=='column-1'?true:false}
-                     id="reducirLineal"
+                     id={"reducirLineal-"+props.nivel+"-"+props.numEc}
                      value={inputValue}
                      onChange={handleChange}
                      onBlur={e => updateX(e.target.value)}
@@ -409,7 +409,7 @@ const AreaEcuacion = (props) =>{
                     <div className="reducido" style={{color: 'blue',width:'20px',}}>=</div>
                     <input type="text"
                      className="reducido" disabled={lado!=='column-2'?true:false}
-                     id="reducirConstante"
+                     id={"reducirConstante-"+props.nivel+"-"+props.numEc}
                      onChange={handleChange2}
                      onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value,'column-2')}/>
                 </div>}

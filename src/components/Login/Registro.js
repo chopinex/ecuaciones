@@ -1,5 +1,5 @@
 import React, { useState,useCallback } from 'react'
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { useNavigate} from 'react-router-dom'
 import app from '../../config'
 //import { AuthContext } from '../../Auth'
@@ -10,20 +10,25 @@ const Registro=() =>{
     const navigate =useNavigate();
 
     const handleSignup = useCallback(
-        async event =>{
+        event =>{
             event.preventDefault();
-            const {email,password,password2} = event.target.elements;
+            const {nombre,email,password,password2} = event.target.elements;
             if(password.value===password2.value){
-                setErr("");
-                try{
-                    await createUserWithEmailAndPassword(app,email.value,password.value);
-                    navigate("/inicio");
-                } catch(error){
-                    console.log(error);
+                if(password.value.length>=6){
+                    setErr("");
+                    createUserWithEmailAndPassword(app,email.value,password.value)
+                    .then(async (userCredentials) =>{
+                        await updateProfile(userCredentials.user,{ 'displayName' : nombre.value });
+                        navigate("/inicio");
+                    }).catch((error) =>{
+                        console.log(error);
+                    });
                 }
+                else
+                    setErr("La contraseña debe tener al menos 6 caracteres.");    
             }
             else
-                setErr("Las contraseñas no coinciden");
+                setErr("Las contraseñas no coinciden.");
         },[navigate]
     );
 
@@ -36,6 +41,8 @@ const Registro=() =>{
     return(
         <form onSubmit={handleSignup}>
             <h1>Registro</h1>
+            <label>Nombre de usuario</label>
+            <input name="nombre" type="text" />
             <label>Email</label>
             <input name="email" type="email" />
             <label>Contraseña</label>
