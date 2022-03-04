@@ -13,7 +13,7 @@ const AreaEcuacion = (props) =>{
     const [input2Value,setInput2Value] = useState('')
 
     const [data,setData] = useState(props.initialData)
-
+    const numerito=props.ejercicioID.match(/[0-9]+/)[0];
     const actualizacion = () =>{
         const entradas = document.getElementById('red0Results').getElementsByTagName('input');
         const newTasks = {
@@ -125,7 +125,7 @@ const AreaEcuacion = (props) =>{
                 }
             }
             else{
-                if (document.getElementById("reducirLineal-"+props.nivel+"-"+props.numEc).value!=='x'){
+                if (document.getElementById("reducirLineal-"+props.nivel+"-"+numerito).value!=='x'){
                     setPaso('despejar');
                     props.setPaso('despejar');
                     setLado('column-3');
@@ -325,9 +325,9 @@ const AreaEcuacion = (props) =>{
 
     useEffect(() => {
         //console.log(document.activeElement.id);
-        if(error===''&&inputValue!==''&&document.activeElement.id==='reducirLineal')
+        if(error===''&&inputValue!==''&&document.activeElement.id==="reducirLineal-"+props.nivel+"-"+numerito)
             setTimeout(() => setError('Presiona Enter para confirmar tu respuesta'),4000);
-        if(error===''&&input2Value!==''&&document.activeElement.id==='reducirConstante')
+        if(error===''&&input2Value!==''&&document.activeElement.id==="reducirConstante-"+props.nivel+"-"+numerito)
             setTimeout(() => setError('Presiona Enter para confirmar tu respuesta'),4000);
         if(error!=='')
             setTimeout(() => setError(''),5000);
@@ -401,7 +401,8 @@ const AreaEcuacion = (props) =>{
                 {(paso==='reducir' || paso==='despejar') &&  <div className="ecuacion">
                     <input type="text" 
                      className="reducido" disabled={lado!=='column-1'?true:false}
-                     id={"reducirLineal-"+props.nivel+"-"+props.numEc}
+                     id={"reducirLineal-"+props.nivel+"-"+numerito}
+                     defaultValue={props.defecto?props.defecto['reducir'][0]:""}
                      value={inputValue}
                      onChange={handleChange}
                      onBlur={e => updateX(e.target.value)}
@@ -409,7 +410,8 @@ const AreaEcuacion = (props) =>{
                     <div className="reducido" style={{color: 'blue',width:'20px',}}>=</div>
                     <input type="text"
                      className="reducido" disabled={lado!=='column-2'?true:false}
-                     id={"reducirConstante-"+props.nivel+"-"+props.numEc}
+                     id={"reducirConstante-"+props.nivel+"-"+numerito}
+                     defaultValue={props.defecto?props.defecto['reducir'][1]:""}
                      onChange={handleChange2}
                      onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value,'column-2')}/>
                 </div>}

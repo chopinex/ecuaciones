@@ -1,5 +1,5 @@
-import React,{useState,useEffect,useContext} from 'react'
-import { getFirestore,doc,setDoc } from 'firebase/firestore'
+import React,{ useState,useEffect,useContext } from 'react'
+import { getFirestore,doc,setDoc,collection,getDocs } from 'firebase/firestore'
 import './Principal.css'
 import BarraLateral from './BarraLateral'
 import AreaEcuacion from './AreaEcuacion'
@@ -17,6 +17,7 @@ const Principal = () =>{
     const {user} = useContext(AuthContext);
     const firestore = getFirestore();
     const allData = require('../../data/ecuaciones.json');
+    const soluciones = [];
 
     const tipIzquierda0 = {left: "20%",top: "180px"};
     const tipIzquierda = {left: "22vw",top: (32+70*(ecuaID-1)).toString()+"vh"};
@@ -34,26 +35,42 @@ const Principal = () =>{
                       top:(30+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",left:"50vw",animation: "vaiven2 1s infinite"};
     const vaivenAbj ={position: "relative",width:"30px",height:"30px",top:"330px",zIndex:"-1",left:"33%",animation: "vaiven 1s infinite"};
 
+    useEffect(async () => {
+        const snapshot = await getDocs(collection(firestore,user.email));
+        snapshot.forEach((doc) => {
+            soluciones.push(doc.data());
+        });
+        setEcuaID(soluciones.length+1);
+        for(let x=0;x<soluciones.length;x++){
+            console.log(soluciones[x]['reducir']);
+        }
+    },[user.email])
+
     useEffect(() => {
-        let offset   = document.getElementById("ejercicio-"+ecuaID).offsetTop;
-        //var alto   = document.getElementById("ejercicio-"+ecuaID).offsetHeight;
-        window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
         if(user.email){
             let ecs=(ecuaID-1).toString();
-            let elemL=document.getElementById("reducirLineal-"+nivID+"-"+ecuaID).value;
-            let elemC=document.getElementById("reducirConstante-"+nivID+"-"+ecuaID).value;
-            console.log(elemL," ",elemC);
+            let elemL=document.getElementById("reducirLineal-"+nivID+"-"+ecs).value;
+            let elemC=document.getElementById("reducirConstante-"+nivID+"-"+ecs).value;
+            if(ecs.length===1)
+                ecs='0'+ecs;
             const alumnoData = doc(firestore,user.email+'/ecuacion'+nivID+'-'+ecs);
             const av={
-            nivel:nivID,
-            ecuacion: ecuaID-1,
-            paso: { id: paso, 
-                    entradas:[elemL,elemC]}
+                nivel:nivID,
+                ecuacion: ecuaID-1,
+                red0: null,
+                transponer: null,
+                reducir: [elemL,elemC],
+                despejar: null
             };
             setDoc(alumnoData,av,{merge: true});
         }
+        if(ecuaID<=Object.keys(allData).length){
+            let offset   = document.getElementById("ejercicio-"+ecuaID).offsetTop;
+            //var alto   = document.getElementById("ejercicio-"+ecuaID).offsetHeight;
+            window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
+        }
     }, [ecuaID])
-    
+
     return(
         <div className="contenido">
             {lado && <div className="tip"
@@ -92,8 +109,10 @@ const Principal = () =>{
             <div className="areas">
             {
                 Object.keys(allData).map(ecuacionId => {
+                    let theID= parseInt(allData[ecuacionId]['id']);
+                    console.log(soluciones);
                      return(
-                        parseInt(allData[ecuacionId]['id'])<=ecuaID && <AreaEcuacion
+                        theID<=ecuaID && <AreaEcuacion
                          key={ecuacionId}
                          initialData={allData[ecuacionId]}
                          redFirst={redFirst}
@@ -103,13 +122,15 @@ const Principal = () =>{
                          ejercicioID={ecuacionId}
                          nivel={nivID}
                          numEc={ecuaID}
-                         setEcuacion={setEcuaID}/>
+                         setEcuacion={setEcuaID}
+                         defecto={soluciones?soluciones[theID-1]:null}/>
                     );
                 }
             )}
             </div>
              <BarraLateral initialData={allData} numNiv={nivID} numEc={ecuaID}/>
         </div>
+
     );
 }
 
