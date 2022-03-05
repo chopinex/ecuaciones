@@ -38,12 +38,9 @@ const BarraLateral = (props) =>{
 		ejercicios.push(ej);
  	}
  	for (let i = 0; i < nvls; i++) {
- 		niveles.push(<div className="nivel">
- 			<div key={'nivel-'+i} className="nivel-titulo" onClick={() => handleClick(0)}>Nivel {i+1}-{ejercicios[i].length}</div>
- 			{(props.numNiv ===i+1 || mostrar[i]) && <div>
- 				{ejercicios[i]}
- 			 </div>
- 			}
+ 		niveles.push(<div key={'nivel-'+i} className="nivel">
+ 			<div key={'niveltitulo-'+i} className="nivel-titulo" onClick={() => handleClick(0)}>Nivel {i+1}-{ejercicios[i].length}</div>
+ 				{(props.numNiv ===i+1 || mostrar[i]) && ejercicios[i] }
  			</div>
  		);
 	}

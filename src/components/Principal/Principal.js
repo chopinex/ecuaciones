@@ -6,6 +6,8 @@ import AreaEcuacion from './AreaEcuacion'
 import { AuthContext } from '../../Auth'
 import flecha from './arrow.png'
 
+var soluciones = [];
+
 const Principal = () =>{
     const [lado,setLado] = useState('column-1')
     const [paso,setPaso] = useState('reducir')
@@ -17,7 +19,6 @@ const Principal = () =>{
     const {user} = useContext(AuthContext);
     const firestore = getFirestore();
     const allData = require('../../data/ecuaciones.json');
-    const soluciones = [];
 
     const tipIzquierda0 = {left: "20%",top: "180px"};
     const tipIzquierda = {left: "22vw",top: (32+70*(ecuaID-1)).toString()+"vh"};
@@ -35,22 +36,29 @@ const Principal = () =>{
                       top:(30+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",left:"50vw",animation: "vaiven2 1s infinite"};
     const vaivenAbj ={position: "relative",width:"30px",height:"30px",top:"330px",zIndex:"-1",left:"33%",animation: "vaiven 1s infinite"};
 
-    useEffect(async () => {
-        const snapshot = await getDocs(collection(firestore,user.email));
-        snapshot.forEach((doc) => {
-            soluciones.push(doc.data());
-        });
-        setEcuaID(soluciones.length+1);
-        for(let x=0;x<soluciones.length;x++){
-            console.log(soluciones[x]['reducir']);
+    useEffect( () => {
+        if(user.email){
+            async function fecthData(){
+                const snapshot = await getDocs(collection(firestore,user.email));
+                snapshot.forEach((doc) => {
+                    soluciones.push(doc.data());
+                });
+                setEcuaID(soluciones.length+1);
+            }
+            /*for(let x=0;x<soluciones.length;x++){
+                console.log(soluciones[x]['reducir']);
+            }*/
+            fecthData();
         }
     },[user.email])
 
     useEffect(() => {
-        if(user.email){
-            let ecs=(ecuaID-1).toString();
-            let elemL=document.getElementById("reducirLineal-"+nivID+"-"+ecs).value;
-            let elemC=document.getElementById("reducirConstante-"+nivID+"-"+ecs).value;
+        let ecs=(ecuaID-1).toString();
+        let elemL=document.getElementById("reducirLineal-"+nivID+"-"+ecs);
+        let elemC=document.getElementById("reducirConstante-"+nivID+"-"+ecs);
+        if(user.email&&elemL&&elemC){
+            let elemLV=elemL.value;
+            let elemCV=elemC.value;
             if(ecs.length===1)
                 ecs='0'+ecs;
             const alumnoData = doc(firestore,user.email+'/ecuacion'+nivID+'-'+ecs);
@@ -59,18 +67,22 @@ const Principal = () =>{
                 ecuacion: ecuaID-1,
                 red0: null,
                 transponer: null,
-                reducir: [elemL,elemC],
+                reducir: [elemLV,elemCV],
                 despejar: null
             };
             setDoc(alumnoData,av,{merge: true});
         }
-        if(ecuaID<=Object.keys(allData).length){
+        if(ecuaID<=Object.keys(allData).length && document.getElementById("ejercicio-"+ecuaID)){
             let offset   = document.getElementById("ejercicio-"+ecuaID).offsetTop;
             //var alto   = document.getElementById("ejercicio-"+ecuaID).offsetHeight;
             window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
         }
     }, [ecuaID])
 
+    if(!user.email){
+        return(<div className="contenido"><h1>Cargando...</h1></div>);
+    }
+    else{
     return(
         <div className="contenido">
             {lado && <div className="tip"
@@ -110,7 +122,6 @@ const Principal = () =>{
             {
                 Object.keys(allData).map(ecuacionId => {
                     let theID= parseInt(allData[ecuacionId]['id']);
-                    console.log(soluciones);
                      return(
                         theID<=ecuaID && <AreaEcuacion
                          key={ecuacionId}
@@ -132,6 +143,7 @@ const Principal = () =>{
         </div>
 
     );
+    }
 }
 
 

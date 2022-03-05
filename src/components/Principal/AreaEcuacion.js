@@ -391,7 +391,9 @@ const AreaEcuacion = (props) =>{
                                  column={column}
                                  tasks={tasks}
                                  lado={lado}
-                                 paso={paso}/>
+                                 paso={paso}
+                                 animar={parseInt(numerito)===props.numEc}
+                                 />
                                 );
                         })
                     }
@@ -399,21 +401,25 @@ const AreaEcuacion = (props) =>{
                     </DragDropContext>
                 </div>}
                 {(paso==='reducir' || paso==='despejar') &&  <div className="ecuacion">
-                    <input type="text" 
+                    {!props.defecto?<input type="text" 
                      className="reducido" disabled={lado!=='column-1'?true:false}
                      id={"reducirLineal-"+props.nivel+"-"+numerito}
-                     defaultValue={props.defecto?props.defecto['reducir'][0]:""}
+                     //defaultValue={props.defecto?props.defecto['reducir'][0]:""}
                      value={inputValue}
                      onChange={handleChange}
                      onBlur={e => updateX(e.target.value)}
-                     onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value,'column-1')}/>
+                     onKeyPress={e => e.key === 'Enter' && calcularL(e.target.value,'column-1')}/>:
+                     <label className="reducido">{props.defecto['reducir'][0]}</label>}
+
                     <div className="reducido" style={{color: 'blue',width:'20px',}}>=</div>
-                    <input type="text"
+
+                    {!props.defecto?<input type="text"
                      className="reducido" disabled={lado!=='column-2'?true:false}
                      id={"reducirConstante-"+props.nivel+"-"+numerito}
-                     defaultValue={props.defecto?props.defecto['reducir'][1]:""}
+                     //defaultValue={props.defecto?props.defecto['reducir'][1]:""}
                      onChange={handleChange2}
-                     onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value,'column-2')}/>
+                     onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value,'column-2')}/>:
+                     <label className="reducido">{props.defecto['reducir'][1]}</label>}
                 </div>}
                 {paso=== 'despejar' && <div className="ecuacion">
                     <label className="despejado" style={lado==='column-3'?animatedNumber:normalNumber}>x</label>

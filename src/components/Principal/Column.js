@@ -6,10 +6,10 @@ import Task from './Task'
 const Column = (props) =>{
     const normalNumber = {color: "red",fontSize:"20pt"};
     const animatedNumber = { animation: "animatedNumber 1s infinite"};
-
+    console.log(props.animar);
     return (
         <div className="col-container" id={props.column.id}
-         style={(props.lado===props.column.id && props.paso==='reducir')?animatedNumber:normalNumber}>
+         style={(props.lado===props.column.id && props.paso==='reducir' && props.animar)?animatedNumber:normalNumber}>
             {/*<div className="col-title">{props.column.title}</div>*/}
             <Droppable droppableId={props.column.id}
              direction = 'horizontal' 
