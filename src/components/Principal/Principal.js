@@ -45,10 +45,13 @@ const Principal = () =>{
                     soluciones.push(doc.data());
                 });
                 setEcuaID(soluciones.length+1);
+                /*for(let i=0;i<soluciones.length;i++){
+                    if(soluciones[i].reducir[0]===""){
+                        setOldEcuaID(i+1);
+                        break;
+                    }
+                }*/
             }
-            /*for(let x=0;x<soluciones.length;x++){
-                console.log(soluciones[x]['reducir']);
-            }*/
             fecthData();
         }
     },[user.email])
@@ -56,9 +59,10 @@ const Principal = () =>{
     useEffect(() => {
         let ecs="";
         if(oldEcuaID!==0)
-            ecs=(oldEcuaID-1).toString();    
+            ecs=(oldEcuaID).toString();    
         else
             ecs=(ecuaID-1).toString();
+        console.log(ecs);
         let elemL=document.getElementById("reducirLineal-"+nivID+"-"+ecs);
         let elemC=document.getElementById("reducirConstante-"+nivID+"-"+ecs);
         if(user.email&&elemL&&elemC){
@@ -77,13 +81,28 @@ const Principal = () =>{
             };
             setDoc(alumnoData,av,{merge: true});
         }
-        if(ecuaID<=Object.keys(allData).length && document.getElementById("ejercicio-"+ecuaID)){
-            let offset   = document.getElementById("ejercicio-"+ecuaID).offsetTop;
-            //var alto   = document.getElementById("ejercicio-"+ecuaID).offsetHeight;
-            window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
-        if(oldEcuaID!==0)
-            setOldEcuaID(0);
-        }
+        /*if(oldEcuaID!==0){
+            let avanzar=true;
+            let i=oldEcuaID+1;
+            while(avanzar){
+                if(document.getElementById("reducirLineal-"+nivID+"-"+i)){
+                    let offset   = document.getElementById("ejercicio-"+i).offsetTop;
+                    window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
+                    avanzar=false;
+                }
+                else{
+                    i++;
+                }
+            }
+        }*/
+        //else{
+            if(ecuaID<=Object.keys(allData).length && document.getElementById("ejercicio-"+ecuaID)){
+                let offset   = document.getElementById("ejercicio-"+ecuaID).offsetTop;
+                window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
+            }
+            if(oldEcuaID!==0)
+                setOldEcuaID(0);
+        //}
     }, [ecuaID,oldEcuaID])
 
     if(!user.email){
