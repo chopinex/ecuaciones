@@ -14,6 +14,7 @@ const Principal = () =>{
     const [etapa,setEtapa] = useState('')
     const [nivID,setNivID] = useState(1)
     const [ecuaID,setEcuaID] = useState(1)
+    const [oldEcuaID,setOldEcuaID] = useState(0)
     const redFirst=false
 
     const {user} = useContext(AuthContext);
@@ -53,7 +54,11 @@ const Principal = () =>{
     },[user.email])
 
     useEffect(() => {
-        let ecs=(ecuaID-1).toString();
+        let ecs="";
+        if(oldEcuaID!==0)
+            ecs=(oldEcuaID-1).toString();    
+        else
+            ecs=(ecuaID-1).toString();
         let elemL=document.getElementById("reducirLineal-"+nivID+"-"+ecs);
         let elemC=document.getElementById("reducirConstante-"+nivID+"-"+ecs);
         if(user.email&&elemL&&elemC){
@@ -64,7 +69,7 @@ const Principal = () =>{
             const alumnoData = doc(firestore,user.email+'/ecuacion'+nivID+'-'+ecs);
             const av={
                 nivel:nivID,
-                ecuacion: ecuaID-1,
+                ecuacion: ecs,
                 red0: null,
                 transponer: null,
                 reducir: [elemLV,elemCV],
@@ -76,8 +81,10 @@ const Principal = () =>{
             let offset   = document.getElementById("ejercicio-"+ecuaID).offsetTop;
             //var alto   = document.getElementById("ejercicio-"+ecuaID).offsetHeight;
             window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
+        if(oldEcuaID!==0)
+            setOldEcuaID(0);
         }
-    }, [ecuaID])
+    }, [ecuaID,oldEcuaID])
 
     if(!user.email){
         return(<div className="contenido"><h1>Cargando...</h1></div>);
@@ -134,6 +141,7 @@ const Principal = () =>{
                          nivel={nivID}
                          numEc={ecuaID}
                          setEcuacion={setEcuaID}
+                         setOldEcuacion={setOldEcuaID}
                          defecto={soluciones?soluciones[theID-1]:null}/>
                     );
                 }

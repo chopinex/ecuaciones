@@ -133,10 +133,13 @@ const AreaEcuacion = (props) =>{
                 }
                 //acabamos!!
                 else{
-                    setLado('column-1');
+                    setLado('');
                     props.setLado('column-1');   
                     setError("bien!");
-                    props.setEcuacion(props.numEc+1);
+                    if(parseInt(numerito)!==props.numEc)
+                        props.setOldEcuacion(parseInt(numerito));
+                    else
+                        props.setEcuacion(props.numEc+1);
                 }
             }
         }
@@ -159,6 +162,10 @@ const AreaEcuacion = (props) =>{
 
     const handleChange2 = (e) =>{
         setInput2Value(e.target.value);
+    }
+
+    const handleJump = () =>{
+        props.setEcuacion(props.numEc+1);
     }
 
     const updateX = (value) =>{
@@ -401,10 +408,10 @@ const AreaEcuacion = (props) =>{
                     </DragDropContext>
                 </div>}
                 {(paso==='reducir' || paso==='despejar') &&  <div className="ecuacion">
-                    {!props.defecto?<input type="text" 
-                     className="reducido" disabled={lado!=='column-1'?true:false}
+                    {(!props.defecto||props.defecto.reducir[0]==="")?<input type="text" 
+                     className="reducido"
+                     disabled={lado!=='column-1'?true:false}
                      id={"reducirLineal-"+props.nivel+"-"+numerito}
-                     //defaultValue={props.defecto?props.defecto['reducir'][0]:""}
                      value={inputValue}
                      onChange={handleChange}
                      onBlur={e => updateX(e.target.value)}
@@ -413,10 +420,10 @@ const AreaEcuacion = (props) =>{
 
                     <div className="reducido" style={{color: 'blue',width:'20px',}}>=</div>
 
-                    {!props.defecto?<input type="text"
-                     className="reducido" disabled={lado!=='column-2'?true:false}
+                    {(!props.defecto||props.defecto.reducir[0]==="")?<input type="text"
+                     className="reducido"
+                     disabled={lado!=='column-2'?true:false}
                      id={"reducirConstante-"+props.nivel+"-"+numerito}
-                     //defaultValue={props.defecto?props.defecto['reducir'][1]:""}
                      onChange={handleChange2}
                      onKeyPress={e => e.key === 'Enter' && calcularC(e.target.value,'column-2')}/>:
                      <label className="reducido">{props.defecto['reducir'][1]}</label>}
@@ -428,6 +435,7 @@ const AreaEcuacion = (props) =>{
                      className="despejado" disabled={lado===''?true:false} onKeyPress={e => e.key === 'Enter' && calcularR(e.target.value)}/>
                 </div>}
                 <div>{error}</div>
+                <div className="seudoEnlace" onClick={() => handleJump()}>{!props.defecto?"Saltar ejercicio":""}</div>
              </div>
 
     );

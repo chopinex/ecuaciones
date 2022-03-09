@@ -73,6 +73,19 @@
     display: flex;
 }
 
+.seudoEnlace{
+    margin-top: 10px;
+    cursor: pointer;
+    color: skyblue;
+    text-decoration: none;
+    font-size: 12pt;
+}
+
+.seudoEnlace:hover {
+    color: steelblue;
+    text-decoration: underline;
+}
+
 @keyframes animatedNumber2{
     0%{color: darkgreen;font-size:24pt;text-shadow: 0 0 3px #033;} 
     50%{color: lightgreen;font-size:32pt;text-shadow: 0 0 3px #033, 0 0 12px #39c;}

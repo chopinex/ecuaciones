@@ -7,9 +7,9 @@ const LandingPage = () =>{
 	return (
 		<div className="portada">
 			<h1>
-				Bienvenidos a ¿alfa?
+				Bienvenidos a ARES
 			</h1>
-			<img src={portada} art="portada" />
+			<img src={portada} alt="portada" />
 		</div>
 	);
 }
