@@ -3,6 +3,7 @@ import {DragDropContext} from 'react-beautiful-dnd'
 import './AreaEcuacion.css'
 import Column from './Column'
 
+
 const AreaEcuacion = (props) =>{
     const [error,setError] = useState('')
     const [lado,setLado] = useState('column-1')
@@ -11,6 +12,7 @@ const AreaEcuacion = (props) =>{
     const [etapa,setEtapa] = useState('')
     const [inputValue,setInputValue] = useState('')
     const [input2Value,setInput2Value] = useState('')
+    const [jump,setJump] = useState(true);
 
     const [data,setData] = useState(props.initialData)
     const numerito=props.ejercicioID.match(/[0-9]+/)[0];
@@ -166,6 +168,7 @@ const AreaEcuacion = (props) =>{
 
     const handleJump = () =>{
         props.setEcuacion(props.numEc+1);
+        setJump(false);
     }
 
     const updateX = (value) =>{
@@ -435,7 +438,9 @@ const AreaEcuacion = (props) =>{
                      className="despejado" disabled={lado===''?true:false} onKeyPress={e => e.key === 'Enter' && calcularR(e.target.value)}/>
                 </div>}
                 <div>{error}</div>
-                <div className="seudoEnlace" onClick={() => handleJump()}>{!props.defecto?"Saltar ejercicio":""}</div>
+                <div className="seudoEnlace" onClick={() => handleJump()}>
+                    {(jump&&!props.defecto)?"Saltar ejercicio":""}
+                </div>
              </div>
 
     );

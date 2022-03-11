@@ -2,7 +2,6 @@ import React,{useState} from 'react'
 import './BarraLateral.css'
 
 const BarraLateral = (props) =>{
-
 	var cntNivel=[];
 	let nvl = "1";
 	let cnt = 0;
@@ -34,7 +33,9 @@ const BarraLateral = (props) =>{
 	for (let i = 0; i < nvls; i++) {
 		let ej=[];
 		for( let j = 0; j < cntNivel[i]; j++)
-			ej.push(<div key={j} className="ejercicio" style={(props.numEc===j+1)?activo:null}>Ejercicio {j+1}</div>);
+			ej.push(<div key={j} className="ejercicio"
+			 style={(props.oldEc===j+1)?activo:((props.oldEc===0&&props.numEc===j+1)?activo:null)}>
+			 Ejercicio {j+1}</div>);
 		ejercicios.push(ej);
  	}
  	for (let i = 0; i < nvls; i++) {
