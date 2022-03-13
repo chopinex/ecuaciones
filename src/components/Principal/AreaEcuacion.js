@@ -138,6 +138,7 @@ const AreaEcuacion = (props) =>{
                     setLado('');
                     props.setLado('column-1');   
                     setError("bien!");
+                    setJump(false);
                     if(parseInt(numerito)!==props.numEc)
                         props.setOldEcuacion(parseInt(numerito));
                     else
@@ -167,8 +168,8 @@ const AreaEcuacion = (props) =>{
     }
 
     const handleJump = () =>{
-        props.setEcuacion(props.numEc+1);
         setJump(false);
+        props.setEcuacion(props.numEc+1);
     }
 
     const updateX = (value) =>{

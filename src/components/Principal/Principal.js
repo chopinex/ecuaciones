@@ -7,6 +7,7 @@ import { AuthContext } from '../../Auth'
 import flecha from './arrow.png'
 
 var soluciones = [];
+var inicio=false;
 
 const Principal = () =>{
     const [lado,setLado] = useState('column-1')
@@ -51,6 +52,8 @@ const Principal = () =>{
                         sols.push(parseInt(soluciones[i].ecuacion));
                     }
                 }
+                if(sols.length>0)
+                    inicio=true;
                 setSolved([...solved,...sols]);
                 setEcuaID(soluciones.length+1);
             }
@@ -59,10 +62,13 @@ const Principal = () =>{
     },[user.email])
 
     useEffect(() => {
+        //console.log(solved,",",inicio,",",oldEcuaID);
         let ecs="";
-        if(oldEcuaID!==0){
+        if(solved.includes(oldEcuaID)){
             ecs=(oldEcuaID).toString();    
-            setSolved(solved.filter(item => item !== solved[0]));
+            console.log(solved.filter(item => item !== oldEcuaID));
+            setSolved(solved.filter(item => item !== oldEcuaID));
+            inicio=true;
         }
         else
             ecs=(ecuaID-1).toString();
@@ -84,9 +90,12 @@ const Principal = () =>{
             };
             setDoc(alumnoData,av,{merge: true});
         }
-        if(solved.length>0){
-            let offset = document.getElementById("ejercicio-"+solved[0]).offsetTop;
+        if(solved.length-1>0&&inicio){
+            console.log(solved);
+            let prim = solved[0]===oldEcuaID?1:0;
+            let offset = document.getElementById("ejercicio-"+solved[prim]).offsetTop;
             window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
+            inicio=false;
         }
         else{
             if(ecuaID<=Object.keys(allData).length && document.getElementById("ejercicio-"+ecuaID)){
@@ -94,9 +103,8 @@ const Principal = () =>{
                 window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
             }
         }
-        if(oldEcuaID!==0)
-            setOldEcuaID(0);
-    }, [ecuaID])
+    }, [oldEcuaID,ecuaID])
+
 
     if(!user.email)
         return("homa");
