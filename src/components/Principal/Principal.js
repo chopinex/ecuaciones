@@ -30,14 +30,18 @@ const Principal = () =>{
     const tipDerecha = {left: "55vw",top: (30+70*(ecuaID-1)).toString()+"vh"};
     const tipAbajo = {left: "30%",top: "325px"};
 
-    const vaivenIzq0 ={position: "relative",width:"30px",height:"30px",top:"210px",zIndex:"-1",left:"24%",animation: "vaiven 1s infinite"};
-    const vaivenIzq ={position: "relative",width:"30px",height:"30px",
+    const vaivenIzq0 ={margin: "0",position: "relative",width:"30px",height:"30px",top:"210px",
+                        zIndex:"-1",left:"24%",animation: "vaiven 1s infinite"};
+    const vaivenIzq ={margin: "0",position: "relative",width:"30px",height:"30px",
                       top:(32+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",left:"32vw",animation: "vaiven 1s infinite"};
-    const vaivenTrp ={position: "relative",width:"30px",height:"30px",top:"280px",zIndex:"-1",left:"32%",animation: "vaiven 1s infinite"};
-    const vaivenDer0 ={position: "relative",width:"30px",height:"30px",top:"210px",zIndex:"-1",left:"54%",animation: "vaiven2 1s infinite"};
-    const vaivenDer ={position: "relative",width:"30px",height:"30px",
+    const vaivenTrp ={margin: "0",position: "relative",width:"30px",height:"30px",top:"280px",
+                      zIndex:"-1",left:"32%",animation: "vaiven 1s infinite"};
+    const vaivenDer0 ={margin: "0",position: "relative",width:"30px",height:"30px",top:"210px",
+                      zIndex:"-1",left:"54%",animation: "vaiven2 1s infinite"};
+    const vaivenDer ={margin: "0",position: "relative",width:"30px",height:"30px",
                       top:(30+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",left:"50vw",animation: "vaiven2 1s infinite"};
-    const vaivenAbj ={position: "relative",width:"30px",height:"30px",top:"330px",zIndex:"-1",left:"33%",animation: "vaiven 1s infinite"};
+    const vaivenAbj ={margin: "0",position: "relative",width:"30px",height:"30px",top:"330px",
+                      zIndex:"-1",left:"33%",animation: "vaiven 1s infinite"};
 
     useEffect( () => {
         if(user.email){
@@ -66,7 +70,6 @@ const Principal = () =>{
         let ecs="";
         if(solved.includes(oldEcuaID)){
             ecs=(oldEcuaID).toString();    
-            console.log(solved.filter(item => item !== oldEcuaID));
             setSolved(solved.filter(item => item !== oldEcuaID));
             inicio=true;
         }
@@ -90,10 +93,18 @@ const Principal = () =>{
             };
             setDoc(alumnoData,av,{merge: true});
         }
-        if(solved.length-1>0&&inicio){
-            console.log(solved);
-            let prim = solved[0]===oldEcuaID?1:0;
-            let offset = document.getElementById("ejercicio-"+solved[prim]).offsetTop;
+        console.log(solved,"-",inicio);
+        if(solved.length>0&&inicio){
+            let prim=0;
+            if(solved[0]===oldEcuaID)
+                prim=solved[1];
+            else{
+                if(solved.indexOf(oldEcuaID)<solved.length-1)
+                    prim=solved[solved.indexOf(oldEcuaID)+1];
+                else
+                    prim=ecuaID;
+            }
+            let offset = document.getElementById("ejercicio-"+prim).offsetTop;
             window.scrollTo({left : 0, top: offset-100, behavior: 'smooth'});
             inicio=false;
         }

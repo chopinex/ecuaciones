@@ -1,5 +1,5 @@
 import React, { useState,useCallback } from 'react'
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { createUserWithEmailAndPassword, updateProfile, setPersistence, browserSessionPersistence } from "firebase/auth"
 import { useNavigate} from 'react-router-dom'
 import app from '../../config'
 //import { AuthContext } from '../../Auth'
@@ -18,6 +18,7 @@ const Registro=() =>{
                     setErr("");
                     createUserWithEmailAndPassword(app,email.value,password.value)
                     .then(async (userCredentials) =>{
+                        await setPersistence(app, browserSessionPersistence);
                         await updateProfile(userCredentials.user,{ 'displayName' : nombre.value });
                         navigate("/inicio");
                     }).catch((error) =>{
