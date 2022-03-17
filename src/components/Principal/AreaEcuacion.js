@@ -16,6 +16,7 @@ const AreaEcuacion = (props) =>{
 
     const [data,setData] = useState(props.initialData)
     const numerito=props.ejercicioID.match(/[0-9]+/)[0];
+    
     const actualizacion = () =>{
         const entradas = document.getElementById('red0Results').getElementsByTagName('input');
         const newTasks = {
@@ -152,7 +153,12 @@ const AreaEcuacion = (props) =>{
         if(value===data.answer){
             setError("bien!");
             setLado('');
-            props.setLado('');
+            props.setLado('column-1');
+            setJump(false);
+            if(parseInt(numerito)!==props.numEc)
+                props.setOldEcuacion(parseInt(numerito));
+            else
+                props.setEcuacion(props.numEc+1);
         }
         else{
             setError("no es correcto");
@@ -344,6 +350,13 @@ const AreaEcuacion = (props) =>{
             setTimeout(() => setError(''),5000);
     },[inputValue,input2Value,error]);
 
+    useEffect(()=>{
+        props.setNivel(data.nivel);
+        if(props.defecto&&props.defecto.despejar){
+            if(props.defecto.despejar!=="")
+                setPaso('despejar');
+        }
+    },[data]);
 
     const tempArray = props.initialData;
 
@@ -352,7 +365,7 @@ const AreaEcuacion = (props) =>{
 
     const normalRedux = {color: "crimson",fontSize:"20pt",width:"25px"};
     const animatedRedux = {animation: "animatedNumber3 1s infinite"};
-
+    console.log(paso);
     return(
         <div className="area-ecuacion" id={props.ejercicioID}>
                 {props.redFirst && <div className="ecuacion">
@@ -435,8 +448,11 @@ const AreaEcuacion = (props) =>{
                 {paso=== 'despejar' && <div className="ecuacion">
                     <label className="despejado" style={lado==='column-3'?animatedNumber:normalNumber}>x</label>
                     <div className="despejado" style={{width:'20px',}}>=</div>
-                    <input type="text"
-                     className="despejado" disabled={lado===''?true:false} onKeyPress={e => e.key === 'Enter' && calcularR(e.target.value)}/>
+                    {(!props.defecto||props.defecto.despejar==="")?
+                    <input type="text" id={"despejar-"+props.nivel+"-"+numerito}
+                     className="despejado" disabled={lado===''?true:false} 
+                     onKeyPress={e => e.key === 'Enter' && calcularR(e.target.value)}/>:
+                    <label className="despejado">{props.defecto['despejar']}</label>}
                 </div>}
                 <div>{error}</div>
                 <div className="seudoEnlace" onClick={() => handleJump()}>

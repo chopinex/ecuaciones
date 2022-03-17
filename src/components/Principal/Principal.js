@@ -77,9 +77,11 @@ const Principal = () =>{
             ecs=(ecuaID-1).toString();
         let elemL=document.getElementById("reducirLineal-"+nivID+"-"+ecs);
         let elemC=document.getElementById("reducirConstante-"+nivID+"-"+ecs);
+        let elemR=document.getElementById("despejar-"+nivID+"-"+ecs);
         if(user.email&&elemL&&elemC){
             let elemLV=elemL.value;
             let elemCV=elemC.value;
+            let elemRV=elemR?elemR.value:null;
             if(ecs.length===1)
                 ecs='0'+ecs;
             const alumnoData = doc(firestore,user.email+'/ecuacion'+nivID+'-'+ecs);
@@ -89,11 +91,11 @@ const Principal = () =>{
                 red0: null,
                 transponer: null,
                 reducir: [elemLV,elemCV],
-                despejar: null
+                despejar: elemRV
             };
             setDoc(alumnoData,av,{merge: true});
         }
-        console.log(solved,"-",inicio);
+
         if(solved.length>0&&inicio){
             let prim=0;
             if(solved[0]===oldEcuaID)
@@ -169,6 +171,7 @@ const Principal = () =>{
                          setEtapa={setEtapa}
                          ejercicioID={ecuacionId}
                          nivel={nivID}
+                         setNivel={setNivID}
                          numEc={ecuaID}
                          setEcuacion={setEcuaID}
                          setOldEcuacion={setOldEcuaID}

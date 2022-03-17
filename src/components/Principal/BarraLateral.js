@@ -30,17 +30,20 @@ const BarraLateral = (props) =>{
 
 	const ejercicios=[];
 	const niveles=[];
+	var nAnt=0;
 	for (let i = 0; i < nvls; i++) {
 		let ej=[];
+		nAnt=i>0?nAnt+cntNivel[i]:0;
 		for( let j = 0; j < cntNivel[i]; j++)
 			ej.push(<div key={j} className="ejercicio"
-			 style={(props.oldEc===j+1)?activo:((props.oldEc===0&&props.numEc===j+1)?activo:null)}>
+			 style={(props.oldEc===nAnt+j+1)?activo:((props.oldEc===0&&props.numEc===nAnt+j+1)?activo:null)}>
 			 Ejercicio {j+1}</div>);
 		ejercicios.push(ej);
  	}
+ 	console.log(nvls);
  	for (let i = 0; i < nvls; i++) {
  		niveles.push(<div key={'nivel-'+i} className="nivel">
- 			<div key={'niveltitulo-'+i} className="nivel-titulo" onClick={() => handleClick(0)}>Nivel {i+1}-{ejercicios[i].length}</div>
+ 			<div key={'niveltitulo-'+i} className="nivel-titulo" onClick={() => handleClick(i)}>Nivel {i+1}-{ejercicios[i].length}</div>
  				{(props.numNiv ===i+1 || mostrar[i]) && ejercicios[i] }
  			</div>
  		);
