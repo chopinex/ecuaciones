@@ -8,8 +8,9 @@ const Home = () =>{
 
 	return(
 		<div className="portada">
-			<h1>Hola {user.displayName}</h1>
-			<a href={"/home"}>Accede a los ejercicios</a>
+			<h1>¡Hola, {user.displayName}!</h1>
+			<a href={"/teoria"}>Ir a teoría</a>
+			<a href={"/home"}>Ir a ejercicios</a>
 			<div className="space">. </div>
 		</div>
 	);

@@ -5,6 +5,7 @@ import BarraLateral from './BarraLateral'
 import AreaEcuacion from './AreaEcuacion'
 import { AuthContext } from '../../Auth'
 import flecha from './arrow.png'
+import aresApuntar from './ares_apuntar.png'
 
 var soluciones = [];
 var inicio=false;
@@ -30,10 +31,10 @@ const Principal = () =>{
     const tipDerecha = {left: "55vw",top: (30+70*(ecuaID-1)).toString()+"vh"};
     const tipAbajo = {left: "30%",top: "325px"};
 
-    const vaivenIzq0 ={margin: "0",position: "relative",width:"30px",height:"30px",top:"210px",
-                        zIndex:"-1",left:"24%",animation: "vaiven 1s infinite"};
+    /*const vaivenIzq0 ={margin: "0",position: "relative",width:"30px",height:"30px",top:"210px",
+                        zIndex:"-1",left:"6vw",animation: "vaiven 1s infinite"};
     const vaivenIzq ={margin: "0",position: "relative",width:"30px",height:"30px",
-                      top:(32+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",left:"32vw",animation: "vaiven 1s infinite"};
+                      top:(32+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",left:"6vw",animation: "vaiven 1s infinite"};
     const vaivenTrp ={margin: "0",position: "relative",width:"30px",height:"30px",top:"280px",
                       zIndex:"-1",left:"32%",animation: "vaiven 1s infinite"};
     const vaivenDer0 ={margin: "0",position: "relative",width:"30px",height:"30px",top:"210px",
@@ -41,7 +42,13 @@ const Principal = () =>{
     const vaivenDer ={margin: "0",position: "relative",width:"30px",height:"30px",
                       top:(30+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",left:"50vw",animation: "vaiven2 1s infinite"};
     const vaivenAbj ={margin: "0",position: "relative",width:"30px",height:"30px",top:"330px",
-                      zIndex:"-1",left:"33%",animation: "vaiven 1s infinite"};
+                      zIndex:"-1",left:"33%",animation: "vaiven 1s infinite"};*/
+
+    const animIzq ={position: "absolute",width: "138px",height: "249px",top:(40+70*(ecuaID-1)).toString()+"vh",zIndex:"-1",
+                    backgroundImage: "url("+aresApuntar+")",left:"25vw",animation: "anim 2s steps(30) 2"};
+    const animDer ={position: "absolute",width: "138px",height: "249px",top:(40+70*(ecuaID-1)).toString()+"vh",
+                    zIndex:"-1",backgroundImage: "url("+aresApuntar+")",left:"58vw",animation: "anim2 2s steps(30) 2",
+                    transform: "scaleX(-1)"};
 
     useEffect( () => {
         if(user.email){
@@ -118,7 +125,6 @@ const Principal = () =>{
         }
     }, [oldEcuaID,ecuaID])
 
-
     if(!user.email)
         return("homa");
     else{
@@ -145,7 +151,7 @@ const Principal = () =>{
                     }[paso+'-'+etapa]
                 }
             </div>}
-            {lado && <img src={flecha}
+            {/*{lado && <img src={flecha}
              alt="flecha"
              style={
                 {
@@ -156,7 +162,15 @@ const Principal = () =>{
                     'reducir-column-2':vaivenDer,
                     'despejar-column-3':vaivenAbj,
                 }[paso+'-'+lado]
-            } />}
+            } />}*/}
+            {lado && <div className="animar"
+             style={
+                {
+                    'reducir-column-1':animIzq,
+                    'reducir-column-2':animDer,   
+                }[paso+'-'+lado]
+             }>
+            </div>}
             <div className="areas">
             {
                 Object.keys(allData).map(ecuacionId => {

@@ -8,6 +8,8 @@ import Landing from './components/Home/LandingPage'
 import PrivateRoute from './PrivateRoute'
 import Home from './components/Home/Home'
 import Footer from './components/Footer/Footer'
+import Teoria from './components/Teoria/Teoria'
+
 import { AuthProvider } from './Auth'
 
 function App() {
@@ -22,6 +24,9 @@ function App() {
           <Route exact path="/registro" element={<Registro/>} />
           <Route exact path="/inicio" element={<PrivateRoute/>}>
             <Route exact path="/inicio" element={<Home/>} />
+          </Route>
+          <Route exact path="/teoria" element={<PrivateRoute/>}>
+            <Route exact path="/teoria" element={<Teoria/>} />
           </Route>
           <Route exact path="/home" element={<PrivateRoute/>}>
             <Route exact path="/home" element={<Principal/>} />

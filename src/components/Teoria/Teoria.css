@@ -1,0 +1,57 @@
+.contenido{
+    padding-top: 150px;
+    width: 500px;
+
+    margin:  0 auto;
+    display:  flex;
+    flex-direction: column;
+    /*justify-content: center;
+    align-items: center;*/
+}
+
+.titulo{
+    font-size: 24pt;
+    margin: 0 auto;
+    font-weight: bold;
+}
+
+.texto{
+    text-align: left;
+    margin-top:  10px;
+    margin-left: 20px;
+}
+
+.subtitulo{
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+.ecuacion{
+    display:  flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.elemento{
+    font-size: 18pt;
+    font-weight: bold;
+    /*border: 1px solid black;*/
+    padding: 20px 15px;
+}
+
+.miembro{
+    color:  red;
+    margin-bottom: 20px;
+    margin-right:  10px;
+}
+
+@keyframes aApunta{
+      from{background-position-x:0px;}
+      to{background-position-x:-4140px;}
+    }
+
+@keyframes rApunta{
+      from{background-position-x:0px;}
+      to{background-position-x:-3330px;}
+    }

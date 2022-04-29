@@ -12,12 +12,32 @@ img{
 	margin: 0 auto;
 	display: block;
 }
+
 a{
 	display: block;
+	margin: 5px auto;
 	text-align: center;
+	background-color: skyblue;
+	padding:  10px;
+	width: 20%;
+	font-size: 18pt;
+	color: white;
+	text-decoration: none;
+	border-radius: 10px;
+	font-weight: bold;
+}
+
+a:hover{
+	color: skyblue;
+	background-color: navy;
 }
 
 .space{
 	color: white;
 	height: 150px;
 }
+
+@keyframes saluda{
+      from{background-position-x:0px;}
+      to{background-position-x:-2780px;}
+    }
